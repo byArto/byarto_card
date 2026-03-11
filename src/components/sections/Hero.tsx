@@ -311,7 +311,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex items-center gap-2 sm:gap-4 lg:mr-24 overflow-x-auto pb-1 no-scrollbar"
+            className="flex items-center gap-2 sm:gap-4 lg:mr-24 overflow-x-auto sm:overflow-visible pb-1 sm:pb-0 no-scrollbar"
           >
             <span
               className="hidden sm:inline text-[10px] tracking-[0.2em] uppercase text-gray-500 mr-2 flex-shrink-0"
