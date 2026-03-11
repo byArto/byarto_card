@@ -211,7 +211,8 @@ export const GhostCursor: React.FC<GhostCursorProps> = ({
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(1, 1), bloomStrength, bloomRadius, bloomThreshold);
     bloomPassRef.current = bloomPass;
     composer.addPass(bloomPass);
-    const filmPass = new ShaderPass(FilmGrainShader as Parameters<typeof ShaderPass>[0]);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const filmPass = new (ShaderPass as any)(FilmGrainShader);
     filmPassRef.current = filmPass;
     composer.addPass(filmPass);
     composer.addPass(UnpremultiplyPass);
