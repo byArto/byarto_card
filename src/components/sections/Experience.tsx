@@ -72,7 +72,9 @@ export function Experience() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            <GhostCursor color="#00E5FF" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
+            <div className="hidden md:block">
+              <GhostCursor color="#00E5FF" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
+            </div>
             <span
               className="text-[11px] tracking-[0.25em] uppercase text-[#00E5FF] relative z-10"
               style={{ fontFamily: 'var(--font-mono)' }}
@@ -106,7 +108,9 @@ export function Experience() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            <GhostCursor color="#A78BFA" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
+            <div className="hidden md:block">
+              <GhostCursor color="#A78BFA" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
+            </div>
             <span
               className="text-[11px] tracking-[0.25em] uppercase text-[#A78BFA] relative z-10"
               style={{ fontFamily: 'var(--font-mono)' }}
@@ -165,7 +169,9 @@ export function Experience() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
           >
-            <GhostCursor color="#34D399" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
+            <div className="hidden md:block">
+              <GhostCursor color="#34D399" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
+            </div>
             <span
               className="text-[11px] tracking-[0.25em] uppercase text-[#34D399] relative z-10"
               style={{ fontFamily: 'var(--font-mono)' }}
