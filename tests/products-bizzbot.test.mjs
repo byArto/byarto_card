@@ -11,6 +11,9 @@ test('products section includes the BizzBot accent card content and assets', () 
   const productsSource = fs.readFileSync(productsPath, 'utf8');
   const translationsSource = fs.readFileSync(translationsPath, 'utf8');
 
+  assert.match(productsSource, /data-subeasy-device-back/);
+  assert.match(productsSource, /data-subeasy-device-front/);
+  assert.match(productsSource, /data-subeasy-dynamic-island/);
   assert.match(translationsSource, /BizzBot/);
   assert.match(translationsSource, /Co-founder & CTO/);
   assert.match(productsSource, /bizzbot-chat\.jpg/);

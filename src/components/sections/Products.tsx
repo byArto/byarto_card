@@ -12,6 +12,128 @@ const images = ['/alphascanner.png', '/nft.png', '/vibeathon.png'];
 const BIZZBOT_SITE_URL = 'https://bizzbot.ru';
 const BIZZBOT_DEMO_URL = 'https://t.me/BeautyProDemo_bot';
 
+type SubeasyDeviceProps = {
+  variant: 'back' | 'front';
+  src: string;
+  alt: string;
+  width: string;
+  transform: string;
+  accentColor: string;
+  glowColor: string;
+  imageScale: number;
+  sizes: string;
+};
+
+function SubeasyDevice({
+  variant,
+  src,
+  alt,
+  width,
+  transform,
+  accentColor,
+  glowColor,
+  imageScale,
+  sizes,
+}: SubeasyDeviceProps) {
+  const markerProps = variant === 'back'
+    ? { 'data-subeasy-device-back': 'true' }
+    : { 'data-subeasy-device-front': 'true' };
+
+  return (
+    <div
+      {...markerProps}
+      className={`relative shrink-0 ${variant === 'front' ? 'z-10' : ''}`}
+      style={{
+        width,
+        aspectRatio: '9 / 19.5',
+        transform,
+      }}
+    >
+      <div
+        className="absolute -inset-[8%] rounded-[28%] blur-2xl opacity-90 pointer-events-none"
+        style={{
+          background: `radial-gradient(circle at 50% 45%, ${glowColor} 0%, transparent 72%)`,
+        }}
+      />
+
+      <div
+        className="relative h-full rounded-[24%] p-[2.4%]"
+        style={{
+          background:
+            'linear-gradient(155deg, rgba(223,229,236,0.92) 0%, rgba(120,129,139,0.92) 16%, rgba(25,28,33,0.98) 45%, rgba(115,124,133,0.94) 73%, rgba(231,236,242,0.92) 100%)',
+          boxShadow:
+            `0 0 0 1px ${accentColor}, 0 0 24px ${glowColor}, 0 28px 56px rgba(0,0,0,0.72), inset 0 0 0 1px rgba(255,255,255,0.24)`,
+        }}
+      >
+        <div
+          className="relative h-full overflow-hidden rounded-[21.5%] bg-black"
+          style={{
+            boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05)',
+          }}
+        >
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover"
+            sizes={sizes}
+            style={{
+              transform: `scale(${imageScale})`,
+              transformOrigin: 'center center',
+            }}
+          />
+
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 16%, rgba(255,255,255,0) 78%, rgba(0,0,0,0.18) 100%)',
+            }}
+          />
+
+          <div
+            className="absolute left-[8.5%] right-[8.5%] top-[4.2%] z-20 flex items-center justify-between text-[8px]"
+            style={{ color: 'rgba(255,255,255,0.9)', fontFamily: 'var(--font-mono)' }}
+          >
+            <span>{variant === 'front' ? '23:06' : '23:13'}</span>
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-end gap-[1.5px]">
+                <span className="block w-[2px] h-[4px] rounded-full bg-white/90" />
+                <span className="block w-[2px] h-[5px] rounded-full bg-white/90" />
+                <span className="block w-[2px] h-[6px] rounded-full bg-white/90" />
+                <span className="block w-[2px] h-[7px] rounded-full bg-white/90" />
+              </div>
+              <span className="block w-[10px] h-[5px] rounded-[999px] border border-white/80" />
+            </div>
+          </div>
+
+          <div
+            data-subeasy-dynamic-island="true"
+            className="absolute left-1/2 top-[2.8%] z-20 -translate-x-1/2 w-[42%] h-[5.7%] rounded-full"
+            style={{
+              background: 'linear-gradient(180deg, rgba(25,25,28,0.98) 0%, rgba(8,8,10,1) 100%)',
+              boxShadow: '0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(255,255,255,0.04)',
+            }}
+          />
+
+          <div
+            className="absolute inset-y-[16%] -left-[1.7%] w-[1.2%] rounded-r-full bg-white/20"
+            style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.04)' }}
+          />
+          <div
+            className="absolute right-[-1.7%] top-[22%] h-[12%] w-[1.2%] rounded-l-full bg-white/20"
+            style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.04)' }}
+          />
+          <div
+            className="absolute right-[-1.7%] top-[37%] h-[20%] w-[1.2%] rounded-l-full bg-white/20"
+            style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.04)' }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Products() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
@@ -188,48 +310,30 @@ export function Products() {
               />
 
               {/* Two phone screenshots */}
-              <div className="relative flex items-end justify-center gap-2 w-full max-w-[380px] mx-auto">
-                {/* Back screenshot */}
-                <div
-                  className="relative overflow-hidden"
-                  style={{
-                    width: '46%',
-                    aspectRatio: '9 / 19.5',
-                    borderRadius: '12%',
-                    transform: 'translateY(24px) rotate(-5deg)',
-                    boxShadow: '0 0 0 1.5px rgba(0,229,255,0.55), 0 0 16px 4px rgba(0,229,255,0.22), 0 24px 48px rgba(0,0,0,0.8)',
-                  }}
-                >
-                  <Image
-                    src="/2.png"
-                    alt="SubEasy Detail"
-                    fill
-                    className="object-cover"
-                    sizes="160px"
-                    style={{ transform: 'scale(1.09)', transformOrigin: 'center center' }}
-                  />
-                </div>
+              <div className="relative flex items-end justify-center gap-2 w-full max-w-[395px] mx-auto">
+                <SubeasyDevice
+                  variant="back"
+                  src="/2.png"
+                  alt="SubEasy Detail"
+                  width="46%"
+                  transform="translateY(24px) rotate(-6deg)"
+                  accentColor="rgba(0,229,255,0.58)"
+                  glowColor="rgba(0,229,255,0.24)"
+                  imageScale={1.09}
+                  sizes="170px"
+                />
 
-                {/* Front screenshot */}
-                <div
-                  className="relative overflow-hidden z-10"
-                  style={{
-                    width: '54%',
-                    aspectRatio: '9 / 19.5',
-                    borderRadius: '12%',
-                    transform: 'rotate(3deg)',
-                    boxShadow: '0 0 0 1.5px rgba(74,222,128,0.6), 0 0 18px 5px rgba(74,222,128,0.2), 0 32px 56px rgba(0,0,0,0.85)',
-                  }}
-                >
-                  <Image
-                    src="/1.png"
-                    alt="SubEasy Subscriptions"
-                    fill
-                    className="object-cover"
-                    sizes="185px"
-                    style={{ transform: 'scale(1.03)', transformOrigin: 'center center' }}
-                  />
-                </div>
+                <SubeasyDevice
+                  variant="front"
+                  src="/1.png"
+                  alt="SubEasy Subscriptions"
+                  width="54%"
+                  transform="rotate(3deg)"
+                  accentColor="rgba(74,222,128,0.64)"
+                  glowColor="rgba(74,222,128,0.22)"
+                  imageScale={1.03}
+                  sizes="210px"
+                />
               </div>
             </div>
           </div>
