@@ -404,70 +404,11 @@ export function Products() {
               <div className="relative p-5 md:p-6 lg:p-7 pt-0 lg:pt-7">
                 <div
                   data-bizzbot-right-stack
-                  className="grid grid-cols-1 auto-rows-fr gap-4 min-h-[420px] md:min-h-[520px] lg:min-h-full h-full"
+                  className="min-h-[420px] md:min-h-[560px] lg:min-h-full h-full"
                 >
                   <div
-                    data-bizzbot-offer-card
-                    className="relative overflow-hidden rounded-[28px] p-4 md:p-5"
-                    style={{
-                      background: 'linear-gradient(180deg, rgba(250,245,239,0.98) 0%, rgba(236,228,220,0.94) 100%)',
-                      border: '1px solid rgba(255,255,255,0.18)',
-                      boxShadow: '0 18px 40px rgba(0,0,0,0.16)',
-                    }}
-                  >
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background:
-                          'radial-gradient(circle at 12% 12%, rgba(255,255,255,0.66) 0%, transparent 24%), radial-gradient(circle at 85% 16%, rgba(201,90,40,0.12) 0%, transparent 22%)',
-                      }}
-                    />
-
-                    <div className="relative flex items-center justify-between gap-3 mb-4">
-                      <span
-                        className="text-[10px] uppercase tracking-[0.24em]"
-                        style={{ color: '#8C5A40', fontFamily: 'var(--font-mono)' }}
-                      >
-                        {bizzbot.offer_panel_label}
-                      </span>
-                      <div className="flex flex-wrap justify-end gap-2">
-                        {bizzbot.chips.slice(0, 3).map((chip) => (
-                          <span
-                            key={chip}
-                            className="px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] rounded-full"
-                            style={{
-                              color: '#46352C',
-                              background: 'rgba(255,255,255,0.52)',
-                              border: '1px solid rgba(70,53,44,0.08)',
-                              fontFamily: 'var(--font-mono)',
-                            }}
-                          >
-                            {chip}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div
-                      className="relative rounded-[22px] overflow-hidden h-[220px] md:h-[250px] lg:h-[265px]"
-                      style={{
-                        background: 'rgba(255,255,255,0.55)',
-                        boxShadow: 'inset 0 0 0 1px rgba(70,53,44,0.06)',
-                      }}
-                    >
-                      <Image
-                        src="/bizzbot-offer.png"
-                        alt="BizzBot product offer"
-                        fill
-                        className="object-contain"
-                        sizes="(min-width: 1280px) 28vw, (min-width: 768px) 42vw, 100vw"
-                      />
-                    </div>
-                  </div>
-
-                  <div
                     data-bizzbot-chat-card
-                    className="relative overflow-hidden rounded-[28px] p-5 md:p-6"
+                    className="relative overflow-hidden rounded-[28px] p-5 md:p-6 lg:p-7 h-full"
                     style={{
                       background: 'linear-gradient(160deg, rgba(17,15,15,0.96) 0%, rgba(28,22,19,0.98) 100%)',
                       border: '1px solid rgba(255,255,255,0.08)',
@@ -493,11 +434,11 @@ export function Products() {
                           </p>
                           <p
                             className="text-sm leading-relaxed"
-                            style={{ color: '#EFE6DE', fontFamily: hf }}
-                          >
-                            {bizzbot.chat_panel_note}
-                          </p>
-                        </div>
+                          style={{ color: '#EFE6DE', fontFamily: hf }}
+                        >
+                          {bizzbot.chat_panel_note}
+                        </p>
+                      </div>
 
                         <span
                           className="px-3 py-1 text-[10px] rounded-full uppercase tracking-[0.18em]"
@@ -512,13 +453,16 @@ export function Products() {
                         </span>
                       </div>
 
-                      <div className="flex-1 flex items-center justify-center pt-5 pb-1">
+                      <div
+                        data-bizzbot-chat-stage
+                        className="flex-1 flex items-center justify-center pt-5 md:pt-6 pb-1"
+                      >
                         <div
-                          className="relative w-[160px] md:w-[182px] lg:w-[194px] aspect-[9/16] rounded-[28px] overflow-hidden"
+                          className="relative w-[192px] md:w-[236px] lg:w-[248px] xl:w-[260px] aspect-[9/16] rounded-[30px] overflow-hidden"
                           style={{
                             background: '#120f0e',
                             border: '1.5px solid rgba(242,194,162,0.68)',
-                            boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 24px 54px rgba(0,0,0,0.5), 0 0 34px rgba(201,90,40,0.18)',
+                            boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 26px 60px rgba(0,0,0,0.56), 0 0 36px rgba(201,90,40,0.2)',
                           }}
                         >
                           <Image
@@ -526,7 +470,7 @@ export function Products() {
                             alt="BizzBot Telegram dialogue"
                             fill
                             className="object-cover"
-                            sizes="194px"
+                            sizes="260px"
                           />
                           <div
                             className="absolute inset-0"

@@ -13,10 +13,11 @@ test('products section includes the BizzBot accent card content and assets', () 
 
   assert.match(translationsSource, /BizzBot/);
   assert.match(translationsSource, /Co-founder & CTO/);
-  assert.match(productsSource, /bizzbot-offer\.png/);
   assert.match(productsSource, /bizzbot-chat\.jpg/);
   assert.match(productsSource, /bizzbot-logo\.png/);
   assert.match(productsSource, /data-bizzbot-right-stack/);
-  assert.match(productsSource, /data-bizzbot-offer-card/);
   assert.match(productsSource, /data-bizzbot-chat-card/);
+  assert.match(productsSource, /data-bizzbot-chat-stage/);
+  assert.doesNotMatch(productsSource, /bizzbot-offer\.png/);
+  assert.doesNotMatch(productsSource, /data-bizzbot-offer-card/);
 });
