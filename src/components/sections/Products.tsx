@@ -402,101 +402,141 @@ export function Products() {
               </div>
 
               <div className="relative p-5 md:p-6 lg:p-7 pt-0 lg:pt-7">
-                <div className="relative min-h-[360px] md:min-h-[420px] lg:min-h-full h-full">
+                <div
+                  data-bizzbot-right-stack
+                  className="grid grid-cols-1 auto-rows-fr gap-4 min-h-[420px] md:min-h-[520px] lg:min-h-full h-full"
+                >
                   <div
-                    className="absolute inset-0 rounded-[28px] overflow-hidden"
+                    data-bizzbot-offer-card
+                    className="relative overflow-hidden rounded-[28px] p-4 md:p-5"
                     style={{
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      background: 'rgba(255,244,237,0.06)',
-                      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)',
+                      background: 'linear-gradient(180deg, rgba(250,245,239,0.98) 0%, rgba(236,228,220,0.94) 100%)',
+                      border: '1px solid rgba(255,255,255,0.18)',
+                      boxShadow: '0 18px 40px rgba(0,0,0,0.16)',
                     }}
                   >
-                    <Image
-                      src="/bizzbot-offer.png"
-                      alt="BizzBot landing hero"
-                      fill
-                      className="object-cover object-left-top"
-                      sizes="(min-width: 1280px) 44vw, (min-width: 768px) 80vw, 100vw"
-                      style={{ transform: 'scale(1.02)', transformOrigin: 'center top' }}
-                    />
                     <div
-                      className="absolute inset-0"
+                      className="absolute inset-0 pointer-events-none"
                       style={{
-                        background: 'linear-gradient(118deg, rgba(17,16,15,0.22) 0%, rgba(17,16,15,0.1) 42%, rgba(17,16,15,0.68) 100%)',
+                        background:
+                          'radial-gradient(circle at 12% 12%, rgba(255,255,255,0.66) 0%, transparent 24%), radial-gradient(circle at 85% 16%, rgba(201,90,40,0.12) 0%, transparent 22%)',
                       }}
                     />
-                    <div
-                      className="absolute inset-x-0 bottom-0 h-28"
-                      style={{
-                        background: 'linear-gradient(to top, rgba(25,20,18,0.92) 0%, rgba(25,20,18,0) 100%)',
-                      }}
-                    />
-                  </div>
 
-                  <div
-                    className="absolute top-4 left-4 right-16 sm:right-auto sm:w-fit rounded-full px-3 py-2 backdrop-blur-md"
-                    style={{
-                      background: 'rgba(20,18,17,0.75)',
-                      border: '1px solid rgba(255,255,255,0.1)',
-                    }}
-                  >
-                    <div className="flex flex-wrap gap-2">
-                      {bizzbot.chips.slice(0, 3).map((chip) => (
-                        <span
-                          key={chip}
-                          className="text-[10px] uppercase tracking-[0.2em]"
-                          style={{ color: '#F5E8DF', fontFamily: 'var(--font-mono)' }}
-                        >
-                          {chip}
-                        </span>
-                      ))}
+                    <div className="relative flex items-center justify-between gap-3 mb-4">
+                      <span
+                        className="text-[10px] uppercase tracking-[0.24em]"
+                        style={{ color: '#8C5A40', fontFamily: 'var(--font-mono)' }}
+                      >
+                        {bizzbot.offer_panel_label}
+                      </span>
+                      <div className="flex flex-wrap justify-end gap-2">
+                        {bizzbot.chips.slice(0, 3).map((chip) => (
+                          <span
+                            key={chip}
+                            className="px-2.5 py-1 text-[10px] uppercase tracking-[0.16em] rounded-full"
+                            style={{
+                              color: '#46352C',
+                              background: 'rgba(255,255,255,0.52)',
+                              border: '1px solid rgba(70,53,44,0.08)',
+                              fontFamily: 'var(--font-mono)',
+                            }}
+                          >
+                            {chip}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div
+                      className="relative rounded-[22px] overflow-hidden h-[220px] md:h-[250px] lg:h-[265px]"
+                      style={{
+                        background: 'rgba(255,255,255,0.55)',
+                        boxShadow: 'inset 0 0 0 1px rgba(70,53,44,0.06)',
+                      }}
+                    >
+                      <Image
+                        src="/bizzbot-offer.png"
+                        alt="BizzBot product offer"
+                        fill
+                        className="object-contain"
+                        sizes="(min-width: 1280px) 28vw, (min-width: 768px) 42vw, 100vw"
+                      />
                     </div>
                   </div>
 
                   <div
-                    className="absolute left-4 bottom-5 sm:left-6 sm:bottom-6 max-w-[240px] rounded-2xl px-4 py-3.5"
+                    data-bizzbot-chat-card
+                    className="relative overflow-hidden rounded-[28px] p-5 md:p-6"
                     style={{
-                      background: 'rgba(21,20,20,0.8)',
+                      background: 'linear-gradient(160deg, rgba(17,15,15,0.96) 0%, rgba(28,22,19,0.98) 100%)',
                       border: '1px solid rgba(255,255,255,0.08)',
-                      backdropFilter: 'blur(18px)',
+                      boxShadow: '0 18px 42px rgba(0,0,0,0.22)',
                     }}
                   >
-                    <p
-                      className="text-[10px] uppercase tracking-[0.24em] mb-2"
-                      style={{ color: '#D78556', fontFamily: 'var(--font-mono)' }}
-                    >
-                      AI chat layer
-                    </p>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{ color: '#F4ECE6', fontFamily: hf }}
-                    >
-                      {bizzbot.subtitle}
-                    </p>
-                  </div>
-
-                  <div
-                    className="absolute right-4 bottom-4 sm:right-8 sm:bottom-7 w-[36%] min-w-[148px] max-w-[220px] aspect-[9/16] rounded-[26px] overflow-hidden"
-                    style={{
-                      border: '1.5px solid rgba(242,194,162,0.68)',
-                      boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 24px 54px rgba(0,0,0,0.5), 0 0 34px rgba(201,90,40,0.18)',
-                      transform: 'rotate(5deg)',
-                      background: '#120f0e',
-                    }}
-                  >
-                    <Image
-                      src="/bizzbot-chat.jpg"
-                      alt="BizzBot Telegram dialogue"
-                      fill
-                      className="object-cover"
-                      sizes="220px"
-                    />
                     <div
-                      className="absolute inset-0"
+                      className="absolute inset-0 pointer-events-none"
                       style={{
-                        boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)',
+                        background:
+                          'radial-gradient(circle at 20% 18%, rgba(215,133,86,0.12) 0%, transparent 26%), radial-gradient(circle at 80% 86%, rgba(255,255,255,0.06) 0%, transparent 24%)',
                       }}
                     />
+
+                    <div className="relative h-full flex flex-col">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p
+                            className="text-[10px] uppercase tracking-[0.24em] mb-2"
+                            style={{ color: '#D78556', fontFamily: 'var(--font-mono)' }}
+                          >
+                            {bizzbot.chat_panel_label}
+                          </p>
+                          <p
+                            className="text-sm leading-relaxed"
+                            style={{ color: '#EFE6DE', fontFamily: hf }}
+                          >
+                            {bizzbot.chat_panel_note}
+                          </p>
+                        </div>
+
+                        <span
+                          className="px-3 py-1 text-[10px] rounded-full uppercase tracking-[0.18em]"
+                          style={{
+                            color: '#E8D7CB',
+                            background: 'rgba(255,255,255,0.06)',
+                            border: '1px solid rgba(255,255,255,0.08)',
+                            fontFamily: 'var(--font-mono)',
+                          }}
+                        >
+                          Telegram
+                        </span>
+                      </div>
+
+                      <div className="flex-1 flex items-center justify-center pt-5 pb-1">
+                        <div
+                          className="relative w-[160px] md:w-[182px] lg:w-[194px] aspect-[9/16] rounded-[28px] overflow-hidden"
+                          style={{
+                            background: '#120f0e',
+                            border: '1.5px solid rgba(242,194,162,0.68)',
+                            boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 24px 54px rgba(0,0,0,0.5), 0 0 34px rgba(201,90,40,0.18)',
+                          }}
+                        >
+                          <Image
+                            src="/bizzbot-chat.jpg"
+                            alt="BizzBot Telegram dialogue"
+                            fill
+                            className="object-cover"
+                            sizes="194px"
+                          />
+                          <div
+                            className="absolute inset-0"
+                            style={{
+                              boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)',
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

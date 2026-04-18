@@ -95,6 +95,9 @@ export const translations = {
         tag: 'B2B SaaS',
         role: 'Co-founder & CTO',
         subtitle: 'AI assistant for salons and studios',
+        offer_panel_label: 'Product offer',
+        chat_panel_label: 'AI dialogue',
+        chat_panel_note: 'BeautyPro demo bot',
         description: 'BizzBot automates routine customer chats for beauty businesses: common questions, booking assistance, visit confirmations and reschedules. Complex cases are handed off to a human admin.',
         highlights: [
           'Telegram, WhatsApp and MAX workflows',
@@ -218,6 +221,9 @@ export const translations = {
         tag: 'B2B SaaS',
         role: 'Co-founder & CTO',
         subtitle: 'AI-ассистент для салонов и студий',
+        offer_panel_label: 'Оффер продукта',
+        chat_panel_label: 'AI-диалог',
+        chat_panel_note: 'BeautyPro demo bot',
         description: 'BizzBot автоматизирует рутинную переписку с клиентами: отвечает на типовые вопросы, помогает с записью, подтверждает визиты и обрабатывает переносы. Сложные случаи передаёт администратору.',
         highlights: [
           'Работает в Telegram, WhatsApp и MAX',
