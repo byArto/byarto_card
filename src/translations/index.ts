@@ -90,6 +90,21 @@ export const translations = {
         'PRO tier: analytics, budget limits and custom themes',
         'Calendar view, renewal reminders, spending insights',
       ],
+      bizzbot: {
+        badge: 'Joint Product',
+        tag: 'B2B SaaS',
+        role: 'Co-founder & CTO',
+        subtitle: 'AI assistant for salons and studios',
+        description: 'BizzBot automates routine customer chats for beauty businesses: common questions, booking assistance, visit confirmations and reschedules. Complex cases are handed off to a human admin.',
+        highlights: [
+          'Telegram, WhatsApp and MAX workflows',
+          'Public demo bot and shipped product landing',
+          'FastAPI, Claude API, Docker and CI/CD stack',
+        ],
+        primary_cta: 'Visit site',
+        secondary_cta: 'Open demo bot',
+        chips: ['Telegram', 'WhatsApp', 'MAX', 'FastAPI', 'Claude API'],
+      },
       github_note: 'more projects on',
       compact: [
         { tag: 'Web3 Tool', title: 'AI Alpha Scanner', description: 'Automated early-stage Web3 project discovery. DeFiLlama integration, AI scoring system.' },
@@ -198,6 +213,21 @@ export const translations = {
         'PRO: аналитика, лимиты бюджета и кастомные темы',
         'Календарь, напоминания о продлении, аналитика трат',
       ],
+      bizzbot: {
+        badge: 'Совместный продукт',
+        tag: 'B2B SaaS',
+        role: 'Co-founder & CTO',
+        subtitle: 'AI-ассистент для салонов и студий',
+        description: 'BizzBot автоматизирует рутинную переписку с клиентами: отвечает на типовые вопросы, помогает с записью, подтверждает визиты и обрабатывает переносы. Сложные случаи передаёт администратору.',
+        highlights: [
+          'Работает в Telegram, WhatsApp и MAX',
+          'Публичный демо-бот и оформленный продуктовый лендинг',
+          'FastAPI, Claude API, Docker и CI/CD-инфраструктура',
+        ],
+        primary_cta: 'Перейти на сайт',
+        secondary_cta: 'Открыть демо-бота',
+        chips: ['Telegram', 'WhatsApp', 'MAX', 'FastAPI', 'Claude API'],
+      },
       github_note: 'ещё проекты на',
       compact: [
         { tag: 'Web3 Инструмент', title: 'AI Alpha Scanner', description: 'Автоматизированный поиск ранних Web3-проектов. Интеграция DeFiLlama, AI-скоринг.' },

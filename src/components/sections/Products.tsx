@@ -9,11 +9,14 @@ import { useLang } from '@/contexts/LangContext';
 const icons = [Zap, Globe, Trophy];
 const accents = ['#A78BFA', '#34D399', '#F59E0B'];
 const images = ['/alphascanner.png', '/nft.png', '/vibeathon.png'];
+const BIZZBOT_SITE_URL = 'https://bizzbot.ru';
+const BIZZBOT_DEMO_URL = 'https://t.me/BeautyProDemo_bot';
 
 export function Products() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const { t, hf } = useLang();
+  const bizzbot = t.products.bizzbot;
 
   const compactProjects = t.products.compact.map((p, i) => ({
     ...p,
@@ -232,84 +235,352 @@ export function Products() {
           </div>
         </motion.div>
 
-        {/* Compact cards row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {compactProjects.map((project, i) => {
-            const Icon = project.icon;
-            return (
-              <motion.div
-                key={project.title}
-                className="group rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden"
-                style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                  transition: 'border-color 0.3s ease',
-                }}
-                initial={{ opacity: 0, y: 24 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.15 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ borderColor: `${project.accent}40` }}
-              >
-                {/* Hover background screenshot */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                  <Image
-                    src={project.image}
-                    alt=""
-                    fill
-                    className="object-contain object-right-bottom"
-                    sizes="400px"
-                    style={{ transform: 'scale(0.7)', transformOrigin: 'right bottom' }}
-                  />
-                  {/* Gradient mask — left fade for text readability */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: `linear-gradient(105deg, rgba(10,10,10,1) 30%, rgba(10,10,10,0.75) 60%, rgba(10,10,10,0.2) 100%)`,
-                    }}
-                  />
-                  {/* Gradient mask — top fade */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: `linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 25%, transparent 55%)`,
-                    }}
-                  />
-                </div>
+        {/* Secondary cases — BizzBot accent card + compact project column */}
+        <div className="grid grid-cols-1 xl:grid-cols-[1.35fr_0.95fr] gap-4">
+          <motion.article
+            className="relative overflow-hidden rounded-[28px]"
+            style={{
+              background: 'linear-gradient(140deg, rgba(28,24,22,0.98) 0%, rgba(18,17,17,0.98) 52%, rgba(58,34,21,0.95) 100%)',
+              border: '1px solid rgba(201,90,40,0.22)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.28)',
+            }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.75, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  'radial-gradient(circle at 14% 18%, rgba(255,255,255,0.06) 0%, transparent 26%), radial-gradient(circle at 82% 18%, rgba(201,90,40,0.14) 0%, transparent 26%), radial-gradient(circle at 72% 88%, rgba(255,213,181,0.1) 0%, transparent 24%)',
+              }}
+            />
 
-                {/* Icon + tag */}
-                <div className="relative z-10 flex items-center gap-3">
-                  <div
-                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: `${project.accent}12`, border: `1px solid ${project.accent}30` }}
-                  >
-                    <Icon className="w-4 h-4" style={{ color: project.accent }} />
+            <div className="relative grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 h-full">
+              <div className="p-7 md:p-8 lg:p-9 flex flex-col justify-between gap-8">
+                <div className="flex flex-col gap-7">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div
+                        className="relative w-14 h-14 rounded-2xl overflow-hidden shrink-0"
+                        style={{
+                          background: 'rgba(255,248,240,0.06)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          boxShadow: '0 12px 28px rgba(0,0,0,0.28)',
+                        }}
+                      >
+                        <Image
+                          src="/bizzbot-logo.png"
+                          alt="BizzBot logo"
+                          fill
+                          className="object-contain p-2.5"
+                          sizes="56px"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-1 min-w-0">
+                        <span
+                          className="text-[10px] tracking-[0.22em] uppercase"
+                          style={{ color: '#F3D4C0', fontFamily: 'var(--font-mono)' }}
+                        >
+                          {bizzbot.badge}
+                        </span>
+                        <span
+                          className="text-xs text-[#C5B5A9]"
+                          style={{ fontFamily: 'var(--font-mono)' }}
+                        >
+                          {bizzbot.role}
+                        </span>
+                      </div>
+                    </div>
+
+                    <span
+                      className="px-3 py-1.5 text-[10px] tracking-[0.24em] uppercase rounded-full whitespace-nowrap"
+                      style={{
+                        color: '#F5A06E',
+                        background: 'rgba(201,90,40,0.14)',
+                        border: '1px solid rgba(201,90,40,0.24)',
+                        fontFamily: 'var(--font-mono)',
+                      }}
+                    >
+                      {bizzbot.tag}
+                    </span>
                   </div>
-                  <span
-                    className="text-[10px] tracking-[0.2em] uppercase text-gray-500"
-                    style={{ fontFamily: 'var(--font-mono)' }}
-                  >
-                    {project.tag}
-                  </span>
+
+                  <div className="flex flex-col gap-4">
+                    <div>
+                      <h3
+                        className="text-4xl md:text-[3.25rem] font-bold leading-none mb-2.5 text-white"
+                        style={{ fontFamily: hf }}
+                      >
+                        BizzBot
+                      </h3>
+                      <p
+                        className="text-sm uppercase tracking-[0.26em]"
+                        style={{ color: '#D78556', fontFamily: 'var(--font-mono)' }}
+                      >
+                        {bizzbot.subtitle}
+                      </p>
+                    </div>
+
+                    <p
+                      className="text-[15px] md:text-base leading-relaxed max-w-xl"
+                      style={{ color: '#D2C6BE', fontFamily: hf }}
+                    >
+                      {bizzbot.description}
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-3.5">
+                    {bizzbot.highlights.map((item) => (
+                      <div key={item} className="flex items-start gap-3">
+                        <div
+                          className="w-2 h-2 rounded-full shrink-0 mt-2"
+                          style={{
+                            background: '#D78556',
+                            boxShadow: '0 0 12px rgba(215,133,86,0.45)',
+                          }}
+                        />
+                        <span
+                          className="text-sm md:text-[15px] leading-relaxed"
+                          style={{ color: '#EFE7E0', fontFamily: hf }}
+                        >
+                          {item}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Title + description */}
-                <div className="relative z-10 flex flex-col gap-2">
-                  <h3
-                    className="text-lg font-semibold text-white"
-                    style={{ fontFamily: hf }}
-                  >
-                    {project.title}
-                  </h3>
-                  <p
-                    className="text-sm text-gray-500 leading-relaxed"
-                    style={{ fontFamily: hf }}
-                  >
-                    {project.description}
-                  </p>
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-wrap gap-2.5">
+                    {bizzbot.chips.map((chip) => (
+                      <span
+                        key={chip}
+                        className="px-3 py-1.5 text-[11px] rounded-full"
+                        style={{
+                          background: 'rgba(255,255,255,0.05)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          color: '#DDD4CD',
+                          fontFamily: 'var(--font-mono)',
+                        }}
+                      >
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    <a
+                      href={BIZZBOT_SITE_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-transform duration-200 hover:-translate-y-0.5"
+                      style={{
+                        color: '#fff',
+                        background: 'linear-gradient(135deg, #C95A28 0%, #E07D43 100%)',
+                        boxShadow: '0 16px 30px rgba(201,90,40,0.24)',
+                        fontFamily: 'var(--font-mono)',
+                      }}
+                    >
+                      <span>{bizzbot.primary_cta}</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+
+                    <a
+                      href={BIZZBOT_DEMO_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm transition-colors"
+                      style={{ color: '#D7B39A', fontFamily: 'var(--font-mono)' }}
+                    >
+                      <span>{bizzbot.secondary_cta}</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                    </a>
+                  </div>
                 </div>
-              </motion.div>
-            );
-          })}
+              </div>
+
+              <div className="relative p-5 md:p-6 lg:p-7 pt-0 lg:pt-7">
+                <div className="relative min-h-[360px] md:min-h-[420px] lg:min-h-full h-full">
+                  <div
+                    className="absolute inset-0 rounded-[28px] overflow-hidden"
+                    style={{
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      background: 'rgba(255,244,237,0.06)',
+                      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06)',
+                    }}
+                  >
+                    <Image
+                      src="/bizzbot-offer.png"
+                      alt="BizzBot landing hero"
+                      fill
+                      className="object-cover object-left-top"
+                      sizes="(min-width: 1280px) 44vw, (min-width: 768px) 80vw, 100vw"
+                      style={{ transform: 'scale(1.02)', transformOrigin: 'center top' }}
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: 'linear-gradient(118deg, rgba(17,16,15,0.22) 0%, rgba(17,16,15,0.1) 42%, rgba(17,16,15,0.68) 100%)',
+                      }}
+                    />
+                    <div
+                      className="absolute inset-x-0 bottom-0 h-28"
+                      style={{
+                        background: 'linear-gradient(to top, rgba(25,20,18,0.92) 0%, rgba(25,20,18,0) 100%)',
+                      }}
+                    />
+                  </div>
+
+                  <div
+                    className="absolute top-4 left-4 right-16 sm:right-auto sm:w-fit rounded-full px-3 py-2 backdrop-blur-md"
+                    style={{
+                      background: 'rgba(20,18,17,0.75)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                    }}
+                  >
+                    <div className="flex flex-wrap gap-2">
+                      {bizzbot.chips.slice(0, 3).map((chip) => (
+                        <span
+                          key={chip}
+                          className="text-[10px] uppercase tracking-[0.2em]"
+                          style={{ color: '#F5E8DF', fontFamily: 'var(--font-mono)' }}
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div
+                    className="absolute left-4 bottom-5 sm:left-6 sm:bottom-6 max-w-[240px] rounded-2xl px-4 py-3.5"
+                    style={{
+                      background: 'rgba(21,20,20,0.8)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      backdropFilter: 'blur(18px)',
+                    }}
+                  >
+                    <p
+                      className="text-[10px] uppercase tracking-[0.24em] mb-2"
+                      style={{ color: '#D78556', fontFamily: 'var(--font-mono)' }}
+                    >
+                      AI chat layer
+                    </p>
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: '#F4ECE6', fontFamily: hf }}
+                    >
+                      {bizzbot.subtitle}
+                    </p>
+                  </div>
+
+                  <div
+                    className="absolute right-4 bottom-4 sm:right-8 sm:bottom-7 w-[36%] min-w-[148px] max-w-[220px] aspect-[9/16] rounded-[26px] overflow-hidden"
+                    style={{
+                      border: '1.5px solid rgba(242,194,162,0.68)',
+                      boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 24px 54px rgba(0,0,0,0.5), 0 0 34px rgba(201,90,40,0.18)',
+                      transform: 'rotate(5deg)',
+                      background: '#120f0e',
+                    }}
+                  >
+                    <Image
+                      src="/bizzbot-chat.jpg"
+                      alt="BizzBot Telegram dialogue"
+                      fill
+                      className="object-cover"
+                      sizes="220px"
+                    />
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)',
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.article>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 gap-4">
+            {compactProjects.map((project, i) => {
+              const Icon = project.icon;
+              return (
+                <motion.div
+                  key={project.title}
+                  className="group rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden"
+                  style={{
+                    background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    transition: 'border-color 0.3s ease',
+                  }}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.18 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ borderColor: `${project.accent}40` }}
+                >
+                  {/* Hover background screenshot */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                    <Image
+                      src={project.image}
+                      alt=""
+                      fill
+                      className="object-contain object-right-bottom"
+                      sizes="400px"
+                      style={{ transform: 'scale(0.7)', transformOrigin: 'right bottom' }}
+                    />
+                    {/* Gradient mask — left fade for text readability */}
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: 'linear-gradient(105deg, rgba(10,10,10,1) 30%, rgba(10,10,10,0.75) 60%, rgba(10,10,10,0.2) 100%)',
+                      }}
+                    />
+                    {/* Gradient mask — top fade */}
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: 'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 25%, transparent 55%)',
+                      }}
+                    />
+                  </div>
+
+                  {/* Icon + tag */}
+                  <div className="relative z-10 flex items-center gap-3">
+                    <div
+                      className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: `${project.accent}12`, border: `1px solid ${project.accent}30` }}
+                    >
+                      <Icon className="w-4 h-4" style={{ color: project.accent }} />
+                    </div>
+                    <span
+                      className="text-[10px] tracking-[0.2em] uppercase text-gray-500"
+                      style={{ fontFamily: 'var(--font-mono)' }}
+                    >
+                      {project.tag}
+                    </span>
+                  </div>
+
+                  {/* Title + description */}
+                  <div className="relative z-10 flex flex-col gap-2">
+                    <h3
+                      className="text-lg font-semibold text-white"
+                      style={{ fontFamily: hf }}
+                    >
+                      {project.title}
+                    </h3>
+                    <p
+                      className="text-sm text-gray-500 leading-relaxed"
+                      style={{ fontFamily: hf }}
+                    >
+                      {project.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
         {/* GitHub footnote */}
