@@ -14,6 +14,7 @@ test('products section includes the BizzBot accent card content and assets', () 
   assert.match(productsSource, /data-subeasy-device-back/);
   assert.match(productsSource, /data-subeasy-device-front/);
   assert.match(productsSource, /data-subeasy-dynamic-island/);
+  assert.match(productsSource, /subeasy-device-frame\.png/);
   assert.match(translationsSource, /BizzBot/);
   assert.match(translationsSource, /Co-founder & CTO/);
   assert.match(productsSource, /bizzbot-chat\.jpg/);

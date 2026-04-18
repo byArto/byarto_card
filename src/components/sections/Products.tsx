@@ -18,7 +18,6 @@ type SubeasyDeviceProps = {
   alt: string;
   width: string;
   transform: string;
-  accentColor: string;
   glowColor: string;
   imageScale: number;
   sizes: string;
@@ -30,7 +29,6 @@ function SubeasyDevice({
   alt,
   width,
   transform,
-  accentColor,
   glowColor,
   imageScale,
   sizes,
@@ -45,30 +43,27 @@ function SubeasyDevice({
       className={`relative shrink-0 ${variant === 'front' ? 'z-10' : ''}`}
       style={{
         width,
-        aspectRatio: '9 / 19.5',
+        aspectRatio: '775 / 1600',
         transform,
       }}
     >
       <div
-        className="absolute -inset-[8%] rounded-[28%] blur-2xl opacity-90 pointer-events-none"
+        className="absolute -inset-[10%] rounded-[28%] blur-2xl opacity-90 pointer-events-none"
         style={{
           background: `radial-gradient(circle at 50% 45%, ${glowColor} 0%, transparent 72%)`,
         }}
       />
 
-      <div
-        className="relative h-full rounded-[24%] p-[2.4%]"
-        style={{
-          background:
-            'linear-gradient(155deg, rgba(223,229,236,0.92) 0%, rgba(120,129,139,0.92) 16%, rgba(25,28,33,0.98) 45%, rgba(115,124,133,0.94) 73%, rgba(231,236,242,0.92) 100%)',
-          boxShadow:
-            `0 0 0 1px ${accentColor}, 0 0 24px ${glowColor}, 0 28px 56px rgba(0,0,0,0.72), inset 0 0 0 1px rgba(255,255,255,0.24)`,
-        }}
-      >
+      <div className="relative h-full">
         <div
-          className="relative h-full overflow-hidden rounded-[21.5%] bg-black"
+          className="absolute overflow-hidden"
           style={{
-            boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.05)',
+            left: '4.258%',
+            top: '1.8125%',
+            width: '91.355%',
+            height: '96.375%',
+            borderRadius: '10.8%',
+            boxShadow: '0 10px 28px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.04)',
           }}
         >
           <Image
@@ -87,46 +82,21 @@ function SubeasyDevice({
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                'linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0) 16%, rgba(255,255,255,0) 78%, rgba(0,0,0,0.18) 100%)',
+                'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 16%, rgba(255,255,255,0) 76%, rgba(0,0,0,0.2) 100%)',
             }}
           />
+        </div>
 
-          <div
-            className="absolute left-[8.5%] right-[8.5%] top-[4.2%] z-20 flex items-center justify-between text-[8px]"
-            style={{ color: 'rgba(255,255,255,0.9)', fontFamily: 'var(--font-mono)' }}
-          >
-            <span>{variant === 'front' ? '23:06' : '23:13'}</span>
-            <div className="flex items-center gap-1.5">
-              <div className="flex items-end gap-[1.5px]">
-                <span className="block w-[2px] h-[4px] rounded-full bg-white/90" />
-                <span className="block w-[2px] h-[5px] rounded-full bg-white/90" />
-                <span className="block w-[2px] h-[6px] rounded-full bg-white/90" />
-                <span className="block w-[2px] h-[7px] rounded-full bg-white/90" />
-              </div>
-              <span className="block w-[10px] h-[5px] rounded-[999px] border border-white/80" />
-            </div>
-          </div>
-
-          <div
-            data-subeasy-dynamic-island="true"
-            className="absolute left-1/2 top-[2.8%] z-20 -translate-x-1/2 w-[42%] h-[5.7%] rounded-full"
-            style={{
-              background: 'linear-gradient(180deg, rgba(25,25,28,0.98) 0%, rgba(8,8,10,1) 100%)',
-              boxShadow: '0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(255,255,255,0.04)',
-            }}
-          />
-
-          <div
-            className="absolute inset-y-[16%] -left-[1.7%] w-[1.2%] rounded-r-full bg-white/20"
-            style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.04)' }}
-          />
-          <div
-            className="absolute right-[-1.7%] top-[22%] h-[12%] w-[1.2%] rounded-l-full bg-white/20"
-            style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.04)' }}
-          />
-          <div
-            className="absolute right-[-1.7%] top-[37%] h-[20%] w-[1.2%] rounded-l-full bg-white/20"
-            style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.04)' }}
+        <div
+          data-subeasy-dynamic-island="true"
+          className="absolute inset-0 pointer-events-none"
+        >
+          <Image
+            src="/subeasy-device-frame.png"
+            alt=""
+            fill
+            className="object-contain"
+            sizes={sizes}
           />
         </div>
       </div>
@@ -317,7 +287,6 @@ export function Products() {
                   alt="SubEasy Detail"
                   width="46%"
                   transform="translateY(24px) rotate(-6deg)"
-                  accentColor="rgba(0,229,255,0.58)"
                   glowColor="rgba(0,229,255,0.24)"
                   imageScale={1.09}
                   sizes="170px"
@@ -329,7 +298,6 @@ export function Products() {
                   alt="SubEasy Subscriptions"
                   width="54%"
                   transform="rotate(3deg)"
-                  accentColor="rgba(74,222,128,0.64)"
                   glowColor="rgba(74,222,128,0.22)"
                   imageScale={1.03}
                   sizes="210px"
