@@ -12,6 +12,37 @@ const images = ['/alphascanner.png', '/nft.png', '/vibeathon.png'];
 const BIZZBOT_SITE_URL = 'https://bizzbot.ru';
 const BIZZBOT_DEMO_URL = 'https://t.me/BeautyProDemo_bot';
 
+function NumberBadge({ number, color }: { number: string; color: string }) {
+  return (
+    <div className="relative w-[64px] h-[64px] flex items-center justify-center shrink-0">
+      {/* Soft outer glow */}
+      <div
+        className="absolute inset-[-10px] rounded-full pointer-events-none"
+        style={{
+          background: `radial-gradient(circle, ${color}30 0%, transparent 70%)`,
+          filter: 'blur(10px)',
+        }}
+      />
+      {/* Ring border */}
+      <div
+        className="absolute inset-0 rounded-full"
+        style={{
+          border: `1.5px solid ${color}`,
+          boxShadow: `0 0 18px ${color}55, inset 0 0 12px ${color}18`,
+          background: `${color}0a`,
+        }}
+      />
+      {/* Number */}
+      <span
+        className="relative text-[22px] font-bold tracking-wider z-10"
+        style={{ color, fontFamily: 'var(--font-mono)' }}
+      >
+        {number}
+      </span>
+    </div>
+  );
+}
+
 type SubeasyDeviceProps = {
   variant: 'back' | 'front';
   src: string;
@@ -139,7 +170,7 @@ export function Products() {
 
         {/* Hero card — SubEasy */}
         <motion.div
-          className="rounded-2xl overflow-hidden mb-5 relative"
+          className="rounded-2xl overflow-hidden relative"
           style={{
             background: 'rgba(0, 229, 255, 0.03)',
             border: '1px solid rgba(0, 229, 255, 0.18)',
@@ -161,20 +192,23 @@ export function Products() {
             {/* Left — Content */}
             <div className="p-8 md:p-12 flex flex-col justify-between gap-8">
               <div className="flex flex-col gap-6">
-                {/* Tag */}
-                <div className="flex items-center gap-3">
-                  <span
-                    className="px-3 py-1 text-[10px] font-medium tracking-[0.2em] uppercase bg-[rgba(0,229,255,0.1)] text-[#00E5FF] rounded-full border border-[rgba(0,229,255,0.25)]"
-                    style={{ fontFamily: 'var(--font-mono)' }}
-                  >
-                    {t.products.flagship_tag}
-                  </span>
-                  <span
-                    className="text-[10px] tracking-widest uppercase text-gray-500"
-                    style={{ fontFamily: 'var(--font-mono)' }}
-                  >
-                    {t.products.flagship_sub}
-                  </span>
+                {/* Number badge + Tag row */}
+                <div className="flex items-center gap-5">
+                  <NumberBadge number="01" color="#4ADE80" />
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span
+                      className="px-3 py-1 text-[10px] font-medium tracking-[0.2em] uppercase bg-[rgba(0,229,255,0.1)] text-[#00E5FF] rounded-full border border-[rgba(0,229,255,0.25)]"
+                      style={{ fontFamily: 'var(--font-mono)' }}
+                    >
+                      {t.products.flagship_tag}
+                    </span>
+                    <span
+                      className="text-[10px] tracking-widest uppercase text-gray-500"
+                      style={{ fontFamily: 'var(--font-mono)' }}
+                    >
+                      {t.products.flagship_sub}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Title */}
@@ -213,16 +247,21 @@ export function Products() {
               </div>
 
               {/* Bottom: link + stack */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-4">
                 <a
                   href="https://subeasy.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-medium group w-fit"
-                  style={{ fontFamily: 'var(--font-mono)', fontSize: '1rem' }}
+                  className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition-transform duration-200 hover:-translate-y-0.5 w-fit"
+                  style={{
+                    color: '#0A1410',
+                    background: 'linear-gradient(135deg, #4ADE80 0%, #2DD4BF 100%)',
+                    boxShadow: '0 16px 30px rgba(74,222,128,0.24)',
+                    fontFamily: 'var(--font-mono)',
+                  }}
                 >
-                  <span className="shimmer-link">subeasy.org</span>
-                  <ExternalLink className="w-4 h-4 text-[#00E5FF] opacity-50 group-hover:opacity-100 transition-opacity" />
+                  <span>subeasy.org</span>
+                  <ExternalLink className="w-4 h-4" />
                 </a>
 
                 <div className="flex flex-wrap gap-2">
@@ -307,29 +346,125 @@ export function Products() {
           </div>
         </motion.div>
 
-        {/* Secondary cases — BizzBot accent card + compact project column */}
-        <div className="grid grid-cols-1 xl:grid-cols-[1.35fr_0.95fr] gap-4">
-          <motion.article
-            className="relative overflow-hidden rounded-[28px]"
-            style={{
-              background: 'linear-gradient(140deg, rgba(28,24,22,0.98) 0%, rgba(18,17,17,0.98) 52%, rgba(58,34,21,0.95) 100%)',
-              border: '1px solid rgba(201,90,40,0.22)',
-              boxShadow: '0 20px 60px rgba(0,0,0,0.28)',
-            }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.75, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  'radial-gradient(circle at 14% 18%, rgba(255,255,255,0.06) 0%, transparent 26%), radial-gradient(circle at 82% 18%, rgba(201,90,40,0.14) 0%, transparent 26%), radial-gradient(circle at 72% 88%, rgba(255,213,181,0.1) 0%, transparent 24%)',
-              }}
-            />
+        {/* Divider between flagship cards */}
+        <motion.div
+          className="flex items-center justify-center gap-3 my-10"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          aria-hidden
+        >
+          <div className="h-px w-24 md:w-32 bg-gradient-to-r from-transparent to-[rgba(0,229,255,0.25)]" />
+          <div
+            className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]"
+            style={{ boxShadow: '0 0 10px #00E5FF, 0 0 20px rgba(0,229,255,0.4)' }}
+          />
+          <div className="h-px w-24 md:w-32 bg-gradient-to-l from-transparent to-[rgba(0,229,255,0.25)]" />
+        </motion.div>
 
-            <div className="relative grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 h-full">
-              <div className="p-7 md:p-8 lg:p-9 flex flex-col justify-between gap-8">
+        {/* BizzBot — full-width horizontal card (phone LEFT, content RIGHT) */}
+        <motion.article
+          className="relative overflow-hidden rounded-2xl"
+          style={{
+            background: 'linear-gradient(140deg, rgba(28,24,22,0.98) 0%, rgba(18,17,17,0.98) 52%, rgba(58,34,21,0.95) 100%)',
+            border: '1px solid rgba(201,90,40,0.22)',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.28)',
+          }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.75, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(circle at 18% 18%, rgba(201,90,40,0.14) 0%, transparent 28%), radial-gradient(circle at 86% 18%, rgba(255,255,255,0.05) 0%, transparent 24%), radial-gradient(circle at 28% 88%, rgba(255,213,181,0.1) 0%, transparent 26%)',
+            }}
+          />
+
+          <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-0">
+            {/* LEFT — Phone with chat */}
+            <div className="relative p-6 md:p-8 lg:py-12 lg:pl-12 lg:pr-6 overflow-hidden order-1 lg:order-1">
+              {/* Ambient orange glow behind phone */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(201,90,40,0.14) 0%, transparent 65%)',
+                }}
+              />
+              <div
+                className="absolute pointer-events-none"
+                style={{
+                  bottom: '0',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '70%',
+                  height: '45%',
+                  background: 'radial-gradient(ellipse at 50% 100%, rgba(215,133,86,0.22) 0%, transparent 70%)',
+                  filter: 'blur(20px)',
+                }}
+              />
+
+              {/* Header strip — Number + AI-диалог label + Telegram badge */}
+              <div className="relative flex items-center justify-between gap-4 mb-5">
+                <div className="flex items-center gap-4">
+                  <NumberBadge number="02" color="#D78556" />
+                  <div className="flex flex-col gap-1">
+                    <span
+                      className="text-[10px] uppercase tracking-[0.24em]"
+                      style={{ color: '#D78556', fontFamily: 'var(--font-mono)' }}
+                    >
+                      {bizzbot.chat_panel_label}
+                    </span>
+                    <span
+                      className="text-xs"
+                      style={{ color: '#C5B5A9', fontFamily: 'var(--font-mono)' }}
+                    >
+                      {bizzbot.chat_panel_note}
+                    </span>
+                  </div>
+                </div>
+                <span
+                  className="px-3 py-1 text-[10px] rounded-full uppercase tracking-[0.18em]"
+                  style={{
+                    color: '#E8D7CB',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    fontFamily: 'var(--font-mono)',
+                  }}
+                >
+                  Telegram
+                </span>
+              </div>
+
+              {/* Phone */}
+              <div className="relative flex items-center justify-center">
+                <div
+                  className="relative w-[220px] md:w-[260px] lg:w-[280px] xl:w-[300px] aspect-[9/16] rounded-[32px] overflow-hidden"
+                  style={{
+                    background: '#120f0e',
+                    border: '1.5px solid rgba(242,194,162,0.68)',
+                    boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 30px 70px rgba(0,0,0,0.6), 0 0 50px rgba(201,90,40,0.25)',
+                  }}
+                >
+                  <Image
+                    src="/bizzbot-chat.jpg"
+                    alt="BizzBot Telegram dialogue"
+                    fill
+                    className="object-cover"
+                    sizes="300px"
+                  />
+                  <div
+                    className="absolute inset-0 pointer-events-none"
+                    style={{ boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)' }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT — Content */}
+            <div className="p-8 md:p-12 flex flex-col justify-between gap-8 order-2 lg:order-2">
                 <div className="flex flex-col gap-7">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-4 min-w-0">
@@ -473,93 +608,27 @@ export function Products() {
                 </div>
               </div>
 
-              <div className="relative p-5 md:p-6 lg:p-7 pt-0 lg:pt-7">
-                <div
-                  data-bizzbot-right-stack
-                  className="min-h-[420px] md:min-h-[560px] lg:min-h-full h-full"
-                >
-                  <div
-                    data-bizzbot-chat-card
-                    className="relative overflow-hidden rounded-[28px] p-5 md:p-6 lg:p-7 h-full"
-                    style={{
-                      background: 'linear-gradient(160deg, rgba(17,15,15,0.96) 0%, rgba(28,22,19,0.98) 100%)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      boxShadow: '0 18px 42px rgba(0,0,0,0.22)',
-                    }}
-                  >
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background:
-                          'radial-gradient(circle at 20% 18%, rgba(215,133,86,0.12) 0%, transparent 26%), radial-gradient(circle at 80% 86%, rgba(255,255,255,0.06) 0%, transparent 24%)',
-                      }}
-                    />
-
-                    <div className="relative h-full flex flex-col">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p
-                            className="text-[10px] uppercase tracking-[0.24em] mb-2"
-                            style={{ color: '#D78556', fontFamily: 'var(--font-mono)' }}
-                          >
-                            {bizzbot.chat_panel_label}
-                          </p>
-                          <p
-                            className="text-sm leading-relaxed"
-                          style={{ color: '#EFE6DE', fontFamily: hf }}
-                        >
-                          {bizzbot.chat_panel_note}
-                        </p>
-                      </div>
-
-                        <span
-                          className="px-3 py-1 text-[10px] rounded-full uppercase tracking-[0.18em]"
-                          style={{
-                            color: '#E8D7CB',
-                            background: 'rgba(255,255,255,0.06)',
-                            border: '1px solid rgba(255,255,255,0.08)',
-                            fontFamily: 'var(--font-mono)',
-                          }}
-                        >
-                          Telegram
-                        </span>
-                      </div>
-
-                      <div
-                        data-bizzbot-chat-stage
-                        className="flex-1 flex items-center justify-center pt-5 md:pt-6 pb-1"
-                      >
-                        <div
-                          className="relative w-[192px] md:w-[236px] lg:w-[248px] xl:w-[260px] aspect-[9/16] rounded-[30px] overflow-hidden"
-                          style={{
-                            background: '#120f0e',
-                            border: '1.5px solid rgba(242,194,162,0.68)',
-                            boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 26px 60px rgba(0,0,0,0.56), 0 0 36px rgba(201,90,40,0.2)',
-                          }}
-                        >
-                          <Image
-                            src="/bizzbot-chat.jpg"
-                            alt="BizzBot Telegram dialogue"
-                            fill
-                            className="object-cover"
-                            sizes="260px"
-                          />
-                          <div
-                            className="absolute inset-0"
-                            style={{
-                              boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)',
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </motion.article>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 gap-4">
+        {/* Divider between BizzBot and compact projects — BizzBot orange accent */}
+        <motion.div
+          className="flex items-center justify-center gap-3 my-10"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          aria-hidden
+        >
+          <div className="h-px w-24 md:w-32 bg-gradient-to-r from-transparent to-[rgba(215,133,86,0.3)]" />
+          <div
+            className="w-1.5 h-1.5 rounded-full bg-[#D78556]"
+            style={{ boxShadow: '0 0 10px #D78556, 0 0 20px rgba(215,133,86,0.45)' }}
+          />
+          <div className="h-px w-24 md:w-32 bg-gradient-to-l from-transparent to-[rgba(215,133,86,0.3)]" />
+        </motion.div>
+
+        {/* Compact projects — horizontal row of 3 below BizzBot */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {compactProjects.map((project, i) => {
               const Icon = project.icon;
               return (
@@ -637,7 +706,6 @@ export function Products() {
               );
             })}
           </div>
-        </div>
 
         {/* GitHub footnote */}
         <div className="flex items-center justify-center gap-2 mt-6">

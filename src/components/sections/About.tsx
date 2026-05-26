@@ -5,10 +5,14 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { useLang } from '@/contexts/LangContext';
 
+const ACCENT_CYAN = 'text-[#00E5FF] font-medium';
+const ACCENT_WHITE = 'text-white font-medium';
+const ACCENT_SOFT = 'text-gray-300';
+
 export function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const { t, hf } = useLang();
+  const { lang, t, hf } = useLang();
 
   return (
     <section id="about" className="py-24 px-6 md:px-16 lg:px-24" ref={ref}>
@@ -35,32 +39,49 @@ export function About() {
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.15 }}
+            className="flex flex-col gap-6"
           >
-            <p
-              className="text-lg md:text-xl leading-relaxed text-gray-300"
-              style={{ fontFamily: hf }}
-            >
-              {t.about.p1_pre}{' '}
-              <span className="text-white font-medium">byArto</span>. {t.about.p1_since}{' '}
-              <span className="text-[#00E5FF] font-medium">{t.about.p1_year}</span>{' '}
-              {t.about.p1_content}{' '}
-              <span className="text-white font-medium">{t.about.p1_audience}</span>{t.about.p1_partner}{' '}
-              <span className="text-white font-medium">BingX</span>{t.about.p1_end}
-            </p>
-            <p
-              className="text-lg md:text-xl leading-relaxed text-gray-300 mt-6"
-              style={{ fontFamily: hf }}
-            >
-              {t.about.p2_pre}{' '}
-              <span className="text-[#00E5FF] font-medium">{t.about.p2_product}</span>{t.about.p2_mid}{' '}
-              <span className="text-white font-medium">{t.about.p2_platform}</span>{t.about.p2_end}
-            </p>
-            <p
-              className="text-lg md:text-xl leading-relaxed text-gray-400 mt-6"
-              style={{ fontFamily: hf }}
-            >
-              {t.about.p3}
-            </p>
+            {lang === 'ru' ? (
+              <>
+                <p className="text-lg md:text-xl leading-relaxed text-gray-300" style={{ fontFamily: hf }}>
+                  Меня зовут Артур, в сети — <span className={ACCENT_WHITE}>byArto</span>.{' '}
+                  <span className={ACCENT_CYAN}>AI-Powered Fullstack-разработчик</span>. Работаю по методологии AI-powered development: мульти-агентный воркфлоу{' '}
+                  <span className={ACCENT_SOFT}>(Cursor + Claude Code + Codex)</span>, оркестрация LLM под задачу, архитектура до кода.
+                </p>
+                <p className="text-lg md:text-xl leading-relaxed text-gray-300" style={{ fontFamily: hf }}>
+                  За год — <span className={ACCENT_WHITE}>6+ задеплоенных продуктов</span>.{' '}
+                  <span className={ACCENT_CYAN}>SubEasy</span> в{' '}
+                  <span className={ACCENT_WHITE}>Telegram App Center</span> с платящими пользователями.{' '}
+                  <span className={ACCENT_CYAN}>BizzBot</span> — B2B-ассистент на Claude API с RAG, роль{' '}
+                  <span className={ACCENT_WHITE}>Co-founder & CTO</span>. Коммерческая разработка в найме под{' '}
+                  <span className={ACCENT_WHITE}>NDA</span>: Telegram Mini Apps, RAG-боты, маркетплейсы, парсеры.
+                </p>
+                <p className="text-lg md:text-xl leading-relaxed text-gray-400" style={{ fontFamily: hf }}>
+                  До разработки — 5 лет в Web3-медиа (<span className={ACCENT_WHITE}>30K+</span> аудитории, партнёр{' '}
+                  <span className={ACCENT_WHITE}>BingX</span>). Поэтому понимаю не только код, но и продуктовую боль конечного пользователя.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-lg md:text-xl leading-relaxed text-gray-300" style={{ fontFamily: hf }}>
+                  My name is Artur, online — <span className={ACCENT_WHITE}>byArto</span>.{' '}
+                  <span className={ACCENT_CYAN}>AI-Powered Fullstack Developer</span>. I work with an AI-powered development methodology: multi-agent workflow{' '}
+                  <span className={ACCENT_SOFT}>(Cursor + Claude Code + Codex)</span>, LLM orchestration per task, architecture before code.
+                </p>
+                <p className="text-lg md:text-xl leading-relaxed text-gray-300" style={{ fontFamily: hf }}>
+                  In the past year — <span className={ACCENT_WHITE}>6+ deployed products</span>.{' '}
+                  <span className={ACCENT_CYAN}>SubEasy</span> is live in the{' '}
+                  <span className={ACCENT_WHITE}>Telegram App Center</span> with paying users.{' '}
+                  <span className={ACCENT_CYAN}>BizzBot</span> — a B2B assistant on Claude API with RAG, role{' '}
+                  <span className={ACCENT_WHITE}>Co-founder & CTO</span>. Commercial development under an{' '}
+                  <span className={ACCENT_WHITE}>NDA</span> contract: Telegram Mini Apps, RAG bots, marketplace integrations, parsers.
+                </p>
+                <p className="text-lg md:text-xl leading-relaxed text-gray-400" style={{ fontFamily: hf }}>
+                  Before development — 5 years in Web3 media (<span className={ACCENT_WHITE}>30K+</span> audience,{' '}
+                  <span className={ACCENT_WHITE}>BingX</span> partner). That's why I understand not just code, but the product pain of the end user.
+                </p>
+              </>
+            )}
           </motion.div>
 
           {/* Right — photo */}
@@ -71,9 +92,7 @@ export function About() {
             transition={{ duration: 0.7, delay: 0.3 }}
           >
             <div className="relative w-72 h-96 md:w-80 md:h-[480px]">
-              {/* Glow */}
               <div className="absolute inset-0 rounded-2xl bg-[rgba(0,229,255,0.06)] blur-2xl scale-110" />
-              {/* Border */}
               <div className="absolute inset-0 rounded-2xl border border-[rgba(0,229,255,0.12)]" />
               <Image
                 src="/IMG_4754.JPG"

@@ -2,26 +2,65 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { Send, Mail } from 'lucide-react';
+import { Send, Mail, ArrowUpRight, Copy, Check } from 'lucide-react';
 import FooterAmbient from '../ui/FooterAmbient';
 import { useLang } from '@/contexts/LangContext';
 
-const socials = [
-  {
-    label: 'Telegram',
-    href: 'https://t.me/by_arto',
-    icon: <Send className="w-5 h-5" />,
-  },
-  {
-    label: 'X / Twitter',
-    href: 'https://x.com/byArtoCrypto',
-    icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-      </svg>
-    ),
-  },
-];
+const TG_URL = 'https://t.me/by_arto';
+const X_URL = 'https://x.com/byArtoCrypto';
+const EMAIL = 'bisayzov@gmail.com';
+
+const XIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+/** HUD-style corner brackets — 4 L-shaped accents at the corners of a card */
+function HUDCorners({
+  color = '#00E5FF',
+  size = 14,
+  offset = 10,
+  thickness = 1.5,
+}: {
+  color?: string;
+  size?: number;
+  offset?: number;
+  thickness?: number;
+}) {
+  const common = `absolute pointer-events-none`;
+  const s = `${size}px`;
+  const o = `${offset}px`;
+  const t = `${thickness}px`;
+  return (
+    <>
+      {/* TL */}
+      <span
+        className={common}
+        style={{ top: o, left: o, width: s, height: s, borderTop: `${t} solid ${color}`, borderLeft: `${t} solid ${color}` }}
+        aria-hidden
+      />
+      {/* TR */}
+      <span
+        className={common}
+        style={{ top: o, right: o, width: s, height: s, borderTop: `${t} solid ${color}`, borderRight: `${t} solid ${color}` }}
+        aria-hidden
+      />
+      {/* BL */}
+      <span
+        className={common}
+        style={{ bottom: o, left: o, width: s, height: s, borderBottom: `${t} solid ${color}`, borderLeft: `${t} solid ${color}` }}
+        aria-hidden
+      />
+      {/* BR */}
+      <span
+        className={common}
+        style={{ bottom: o, right: o, width: s, height: s, borderBottom: `${t} solid ${color}`, borderRight: `${t} solid ${color}` }}
+        aria-hidden
+      />
+    </>
+  );
+}
 
 export function Footer() {
   const ref = useRef(null);
@@ -30,7 +69,7 @@ export function Footer() {
   const { t, hf } = useLang();
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('bisayzov@gmail.com');
+    navigator.clipboard.writeText(EMAIL);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -41,10 +80,9 @@ export function Footer() {
       className="relative min-h-[75vh] flex flex-col justify-between overflow-hidden"
       ref={ref}
     >
-      {/* FooterAmbient — slow drifting aurora orbs, replaces WebGL LightRays */}
       <FooterAmbient />
 
-      {/* Top fade — smooth transition from page above */}
+      {/* Top fade */}
       <div
         className="absolute top-0 left-0 right-0 z-10 pointer-events-none"
         style={{
@@ -55,9 +93,9 @@ export function Footer() {
 
       {/* Main content */}
       <div className="relative z-20 flex-1 flex items-center px-6 md:px-16 lg:px-24 py-24">
-        <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
 
-          {/* Left — Headline + pitch */}
+          {/* LEFT — Headline + pitch + mini socials */}
           <div className="flex flex-col gap-7">
             {/* Section label */}
             <motion.div
@@ -99,13 +137,14 @@ export function Footer() {
 
             {/* Headline */}
             <motion.h2
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05]"
               style={{ fontFamily: hf }}
               initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.15 }}
             >
-              {t.footer.headline1}{' '}
+              {t.footer.headline1}
+              <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00E5FF] to-[#2DD4BF]">
                 {t.footer.headline2}
               </span>
@@ -113,7 +152,7 @@ export function Footer() {
 
             {/* Pitch */}
             <motion.p
-              className="text-sm text-gray-500 leading-relaxed max-w-sm"
+              className="text-sm md:text-[15px] text-gray-500 leading-relaxed max-w-md"
               style={{ fontFamily: hf }}
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : {}}
@@ -121,37 +160,109 @@ export function Footer() {
             >
               {t.footer.pitch}
             </motion.p>
+
+            {/* Mini social icons row */}
+            <motion.div
+              className="flex items-center gap-3 mt-2"
+              initial={{ opacity: 0, y: 12 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <a
+                href={TG_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Telegram"
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-gray-400 hover:text-[#00E5FF] transition-all duration-300"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)';
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(0,229,255,0.06)';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)';
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)';
+                }}
+              >
+                <Send className="w-[18px] h-[18px]" />
+              </a>
+              <a
+                href={X_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X / Twitter"
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-gray-400 hover:text-[#00E5FF] transition-all duration-300"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)';
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(0,229,255,0.06)';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)';
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)';
+                }}
+              >
+                <XIcon className="w-[16px] h-[16px]" />
+              </a>
+              <button
+                onClick={handleCopyEmail}
+                aria-label="Copy email"
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-gray-400 hover:text-[#00E5FF] transition-all duration-300 cursor-pointer"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.35)';
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(0,229,255,0.06)';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.08)';
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.03)';
+                }}
+              >
+                <Mail className="w-[18px] h-[18px]" />
+              </button>
+            </motion.div>
           </div>
 
-          {/* Right — Contact methods */}
+          {/* RIGHT — Email card + TG/X big square cards */}
           <motion.div
             className="flex flex-col gap-6"
             initial={{ opacity: 0, x: 24 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.25 }}
           >
-            {/* Email CTA — click to copy */}
+            {/* Email card */}
             <button
               onClick={handleCopyEmail}
-              className="group flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 w-full text-left cursor-pointer"
+              className="group relative flex items-center gap-4 p-6 rounded-2xl transition-all duration-300 w-full text-left cursor-pointer overflow-hidden"
               style={{
-                background: copied ? 'rgba(74,222,128,0.06)' : 'rgba(0,229,255,0.04)',
-                border: `1px solid ${copied ? 'rgba(74,222,128,0.35)' : 'rgba(0,229,255,0.15)'}`,
-                transition: 'all 0.3s ease',
+                background: copied ? 'rgba(74,222,128,0.04)' : 'rgba(0,229,255,0.03)',
+                border: `1px solid ${copied ? 'rgba(74,222,128,0.3)' : 'rgba(0,229,255,0.18)'}`,
               }}
             >
+              <HUDCorners color={copied ? '#4ADE80' : '#00E5FF'} />
+
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
+                className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 relative z-10"
                 style={{
-                  background: copied ? 'rgba(74,222,128,0.12)' : 'rgba(0,229,255,0.1)',
+                  background: copied ? 'rgba(74,222,128,0.1)' : 'rgba(0,229,255,0.08)',
                   border: `1px solid ${copied ? 'rgba(74,222,128,0.3)' : 'rgba(0,229,255,0.2)'}`,
                 }}
               >
                 <Mail className="w-4 h-4 transition-colors duration-300" style={{ color: copied ? '#4ADE80' : '#00E5FF' }} />
               </div>
-              <div className="flex flex-col flex-1">
+
+              <div className="flex flex-col flex-1 relative z-10">
                 <span
-                  className="text-[10px] tracking-[0.2em] uppercase mb-0.5 transition-colors duration-300"
+                  className="text-[10px] tracking-[0.22em] uppercase mb-1 transition-colors duration-300"
                   style={{ fontFamily: 'var(--font-mono)', color: copied ? '#4ADE80' : '#6B7280' }}
                 >
                   {copied ? t.footer.copied : t.footer.email_label}
@@ -160,50 +271,101 @@ export function Footer() {
                   className="text-sm transition-colors duration-300"
                   style={{ fontFamily: 'var(--font-mono)', color: copied ? '#4ADE80' : '#E5E7EB' }}
                 >
-                  bisayzov@gmail.com
+                  {EMAIL}
                 </span>
+              </div>
+
+              <div className="relative z-10 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                {copied ? (
+                  <Check className="w-4 h-4 text-[#4ADE80]" />
+                ) : (
+                  <Copy className="w-4 h-4 text-gray-600 group-hover:text-[#00E5FF] transition-colors" />
+                )}
               </div>
             </button>
 
             {/* Divider */}
             <div className="flex items-center gap-3">
-              <div className="flex-1 h-px bg-[rgba(255,255,255,0.06)]" />
+              <div className="flex-1 h-px bg-[rgba(0,229,255,0.12)]" />
               <span
                 className="text-[10px] tracking-[0.2em] uppercase text-gray-600"
                 style={{ fontFamily: 'var(--font-mono)' }}
               >
-                {t.footer.divider}
+                {`// ${t.footer.divider}`}
               </span>
-              <div className="flex-1 h-px bg-[rgba(255,255,255,0.06)]" />
+              <div className="flex-1 h-px bg-[rgba(0,229,255,0.12)]" />
             </div>
 
-            {/* Social links — stacked */}
-            <div className="flex flex-col gap-3">
-              {socials.map((s, i) => (
-                <motion.a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 px-6 py-4 rounded-2xl text-gray-400 hover:text-white transition-all duration-300 w-full"
-                  style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.07)',
-                  }}
-                  whileHover={{
-                    background: 'rgba(255,255,255,0.06)',
-                    borderColor: 'rgba(255,255,255,0.14)',
-                  }}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.35 + i * 0.07 }}
+            {/* TG + X big square cards */}
+            <div className="grid grid-cols-2 gap-4">
+              {/* Telegram */}
+              <motion.a
+                href={TG_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative aspect-square rounded-2xl flex flex-col items-center justify-center transition-all duration-300 overflow-hidden"
+                style={{
+                  background: 'rgba(0,229,255,0.025)',
+                  border: '1px solid rgba(0,229,255,0.15)',
+                }}
+                whileHover={{
+                  background: 'rgba(0,229,255,0.06)',
+                  borderColor: 'rgba(0,229,255,0.4)',
+                }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.35 }}
+              >
+                <HUDCorners color="#00E5FF" size={16} offset={12} />
+
+                <Send
+                  className="w-14 h-14 text-[#00E5FF] mb-5 transition-transform duration-300 group-hover:scale-110"
+                  style={{ filter: 'drop-shadow(0 0 12px rgba(0,229,255,0.4))' }}
+                />
+                <span
+                  className="text-base md:text-lg font-medium text-white relative z-10"
+                  style={{ fontFamily: hf }}
                 >
-                  {s.icon}
-                  <span style={{ fontFamily: hf, fontSize: '1rem', fontWeight: 500 }}>
-                    {s.label}
-                  </span>
-                </motion.a>
-              ))}
+                  Telegram
+                </span>
+
+                <ArrowUpRight
+                  className="absolute bottom-5 right-5 w-5 h-5 text-[#00E5FF] opacity-50 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </motion.a>
+
+              {/* X / Twitter */}
+              <motion.a
+                href={X_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative aspect-square rounded-2xl flex flex-col items-center justify-center transition-all duration-300 overflow-hidden"
+                style={{
+                  background: 'rgba(0,229,255,0.025)',
+                  border: '1px solid rgba(0,229,255,0.15)',
+                }}
+                whileHover={{
+                  background: 'rgba(0,229,255,0.06)',
+                  borderColor: 'rgba(0,229,255,0.4)',
+                }}
+                initial={{ opacity: 0, y: 12 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.42 }}
+              >
+                <HUDCorners color="#00E5FF" size={16} offset={12} />
+
+                <XIcon className="w-12 h-12 text-[#00E5FF] mb-5 transition-transform duration-300 group-hover:scale-110" />
+                <span
+                  className="text-base md:text-lg font-medium text-white relative z-10"
+                  style={{ fontFamily: hf }}
+                >
+                  X / Twitter
+                </span>
+
+                <ArrowUpRight
+                  className="absolute bottom-5 right-5 w-5 h-5 text-[#00E5FF] opacity-50 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </motion.a>
             </div>
           </motion.div>
 

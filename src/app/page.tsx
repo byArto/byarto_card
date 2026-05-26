@@ -9,6 +9,7 @@ import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Experience from '@/components/sections/Experience';
 import Products from '@/components/sections/Products';
+import BeyondCode from '@/components/sections/BeyondCode';
 import TechMarquee from '@/components/sections/TechMarquee';
 import { LangProvider, useLang } from '@/contexts/LangContext';
 
@@ -44,87 +45,96 @@ function AppContent() {
 
   return (
     <main className="relative bg-[#0A0A0A] min-h-screen">
-      {/* Logo */}
-      <div className="fixed top-[26px] sm:top-[32px] left-4 sm:left-6 z-[100] flex items-center" style={{ height: '48px' }}>
-        <a href="#hero" className="flex items-center">
-          <FuzzyText
-            fontSize="0.9rem"
-            fontWeight={700}
-            color="#00E5FF"
-            baseIntensity={0.05}
-            hoverIntensity={0.5}
-            className="-mr-[30px]"
-          >
-            {'<byArto>'}
-          </FuzzyText>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo 1.png"
-            alt="byArto logo"
-            style={{
-              height: '22px',
-              width: 'auto',
-              filter: 'hue-rotate(60deg) saturate(1.3) brightness(1.1)',
-            }}
-          />
-        </a>
-      </div>
-
-      {/* Sticky nav */}
-      <header className="fixed top-4 left-0 right-0 z-[100]">
-        <PillNav
-          items={navItems}
-          baseColor="#0A0A0A"
-          pillColor="rgba(255,255,255,0.06)"
-          hoveredPillTextColor="#00E5FF"
-          pillTextColor="#9CA3AF"
-        />
-      </header>
-
-      {/* Language toggle — top right */}
-      <div className="fixed top-[26px] sm:top-[32px] right-4 sm:right-6 z-[100] flex items-center" style={{ height: '48px' }}>
+      {/* Top bar — logo (left) + lang toggle (right), aligned with Hero content container */}
+      <div className="fixed top-8 left-0 right-0 z-[100] pointer-events-none">
+        <div className="w-full px-6 md:px-16 lg:px-24">
         <div
-          className="flex items-center rounded-full px-3 py-1.5"
-          style={{
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(255,255,255,0.08)',
-            backdropFilter: 'blur(12px)',
-          }}
+          className="mx-auto max-w-[1540px] flex items-center justify-between"
+          style={{ height: '48px' }}
         >
-          <button
-            onClick={() => setLang('en')}
-            className="transition-colors duration-200 px-1"
+          {/* Logo */}
+          <a href="#hero" className="pointer-events-auto flex items-center h-full">
+            <FuzzyText
+              fontSize="0.9rem"
+              fontWeight={700}
+              color="#00E5FF"
+              baseIntensity={0.05}
+              hoverIntensity={0.5}
+              className="-ml-[60px] -mr-[30px]"
+            >
+              {'<byArto>'}
+            </FuzzyText>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo 1.png"
+              alt="byArto logo"
+              style={{
+                height: '22px',
+                width: 'auto',
+                filter: 'hue-rotate(60deg) saturate(1.3) brightness(1.1)',
+              }}
+            />
+          </a>
+
+          {/* Language toggle */}
+          <div
+            className="pointer-events-auto flex items-center rounded-full px-3 py-1.5"
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              color: lang === 'en' ? '#00E5FF' : '#6B7280',
+              background: 'rgba(255,255,255,0.05)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              backdropFilter: 'blur(12px)',
             }}
           >
-            EN
-          </button>
-          <span style={{ color: '#374151', fontFamily: 'var(--font-mono)', fontSize: '10px', margin: '0 4px' }}>|</span>
-          <button
-            onClick={() => setLang('ru')}
-            className="transition-colors duration-200 px-1"
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              color: lang === 'ru' ? '#00E5FF' : '#6B7280',
-            }}
-          >
-            RU
-          </button>
+            <button
+              onClick={() => setLang('en')}
+              className="transition-colors duration-200 px-1"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '0.1em',
+                color: lang === 'en' ? '#00E5FF' : '#6B7280',
+              }}
+            >
+              EN
+            </button>
+            <span style={{ color: '#374151', fontFamily: 'var(--font-mono)', fontSize: '10px', margin: '0 4px' }}>|</span>
+            <button
+              onClick={() => setLang('ru')}
+              className="transition-colors duration-200 px-1"
+              style={{
+                fontFamily: 'var(--font-mono)',
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '0.1em',
+                color: lang === 'ru' ? '#00E5FF' : '#6B7280',
+              }}
+            >
+              RU
+            </button>
+          </div>
+        </div>
         </div>
       </div>
+
+      {/* Sticky nav — centered, independent layer */}
+      <header className="fixed top-4 left-0 right-0 z-[99] pointer-events-none">
+        <div className="pointer-events-auto">
+          <PillNav
+            items={navItems}
+            baseColor="#0A0A0A"
+            pillColor="rgba(255,255,255,0.06)"
+            hoveredPillTextColor="#00E5FF"
+            pillTextColor="#9CA3AF"
+          />
+        </div>
+      </header>
 
       <Hero />
       <ScrollFade><About /></ScrollFade>
       <ScrollFade><Experience /></ScrollFade>
       <ScrollFade><Products /></ScrollFade>
+      <ScrollFade><BeyondCode /></ScrollFade>
       <ScrollFade><TechMarquee /></ScrollFade>
       <Footer />
     </main>

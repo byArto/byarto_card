@@ -1,18 +1,18 @@
 'use client';
 
 const techs = [
-  'React',
-  'Next.js',
-  'TypeScript',
-  'Python',
-  'Telegram Mini Apps',
-  'GSAP',
-  'Cursor',
-  'Claude',
-  'Tailwind CSS',
-  'FastAPI',
-  'SQLite',
-  'Framer Motion',
+  // Code / Frontend
+  'TypeScript', 'Next.js', 'React', 'Tailwind CSS', 'shadcn/ui', 'Vite',
+  // Backend / Languages
+  'Python', 'Node.js', 'FastAPI', 'Express', 'aiogram', 'Telegraf',
+  // Database
+  'PostgreSQL', 'Supabase', 'SQLite',
+  // AI
+  'Claude Code', 'Cursor', 'Codex', 'RAG', 'MCP', 'Claude API',
+  // Infra
+  'Docker', 'Nginx', 'PM2', 'Vercel', 'GitHub Actions', 'Cloudflare',
+  // Platform / Anim
+  'Telegram Mini Apps', 'Framer Motion',
 ];
 
 export function TechMarquee() {

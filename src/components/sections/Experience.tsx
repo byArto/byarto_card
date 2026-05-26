@@ -7,21 +7,6 @@ import { useLang } from '@/contexts/LangContext';
 
 const GhostCursor = dynamic(() => import('@/components/ui/GhostCursor'), { ssr: false });
 
-const columns = [
-  {
-    bg: 'rgba(0, 229, 255, 0.04)',
-    border: 'rgba(0, 229, 255, 0.18)',
-  },
-  {
-    bg: 'rgba(255, 255, 255, 0.04)',
-    border: 'rgba(255, 255, 255, 0.1)',
-  },
-  {
-    bg: 'rgba(0, 180, 160, 0.05)',
-    border: 'rgba(0, 200, 180, 0.18)',
-  },
-];
-
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
   visible: (i: number) => ({
@@ -31,12 +16,20 @@ const cardVariants = {
   }),
 };
 
+const stackColors: Record<string, { accent: string; bg: string; border: string }> = {
+  Code: { accent: '#00E5FF', bg: 'rgba(0,229,255,0.06)', border: 'rgba(0,229,255,0.18)' },
+  AI:   { accent: '#A78BFA', bg: 'rgba(167,139,250,0.06)', border: 'rgba(167,139,250,0.18)' },
+  Infra: { accent: '#34D399', bg: 'rgba(52,211,153,0.06)', border: 'rgba(52,211,153,0.18)' },
+  'Integrations & QA': { accent: '#F59E0B', bg: 'rgba(245,158,11,0.06)', border: 'rgba(245,158,11,0.18)' },
+  'Интеграции и QA': { accent: '#F59E0B', bg: 'rgba(245,158,11,0.06)', border: 'rgba(245,158,11,0.18)' },
+};
+
 export function Experience() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const { t, hf } = useLang();
 
-  const skills = t.experience.skills;
+  const workflow = t.experience.workflow;
   const timeline = t.experience.timeline;
   const stack = t.experience.stack;
 
@@ -63,10 +56,13 @@ export function Experience() {
         {/* Three columns */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-          {/* Column 1 — Skills */}
+          {/* Column 1 — How I Work */}
           <motion.div
             className="rounded-2xl p-8 flex flex-col gap-6 relative overflow-hidden"
-            style={{ background: columns[0].bg, border: `1px solid ${columns[0].border}` }}
+            style={{
+              background: 'rgba(0, 229, 255, 0.04)',
+              border: '1px solid rgba(0, 229, 255, 0.18)',
+            }}
             custom={0}
             variants={cardVariants}
             initial="hidden"
@@ -75,26 +71,53 @@ export function Experience() {
             <div className="hidden md:block">
               <GhostCursor color="#00E5FF" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
             </div>
+
             <span
               className="text-[11px] tracking-[0.25em] uppercase text-[#00E5FF] relative z-10"
               style={{ fontFamily: 'var(--font-mono)' }}
             >
-              {t.experience.col_skills}
+              {t.experience.col_workflow}
             </span>
 
-            <div className="flex flex-col gap-2.5 relative z-10">
-              {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="text-sm text-gray-300 px-4 py-2 rounded-lg"
+            <div className="flex flex-col gap-4 relative z-10">
+              {workflow.map((item) => (
+                <div
+                  key={item.num}
+                  className="group rounded-xl p-4 transition-all duration-300"
                   style={{
-                    border: '1px solid rgba(0,229,255,0.15)',
-                    background: 'rgba(0,229,255,0.04)',
-                    fontFamily: hf,
+                    background: 'rgba(0,229,255,0.03)',
+                    border: '1px solid rgba(0,229,255,0.1)',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.28)';
+                    (e.currentTarget as HTMLElement).style.background = 'rgba(0,229,255,0.06)';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,229,255,0.1)';
+                    (e.currentTarget as HTMLElement).style.background = 'rgba(0,229,255,0.03)';
                   }}
                 >
-                  {skill}
-                </span>
+                  <div className="flex items-start gap-3 mb-2">
+                    <span
+                      className="text-[10px] font-bold shrink-0 mt-0.5"
+                      style={{ color: '#00E5FF', fontFamily: 'var(--font-mono)' }}
+                    >
+                      {item.num}
+                    </span>
+                    <span
+                      className="text-sm font-semibold text-white leading-snug"
+                      style={{ fontFamily: hf }}
+                    >
+                      {item.title}
+                    </span>
+                  </div>
+                  <p
+                    className="text-xs text-gray-500 leading-relaxed pl-[22px]"
+                    style={{ fontFamily: hf }}
+                  >
+                    {item.desc}
+                  </p>
+                </div>
               ))}
             </div>
           </motion.div>
@@ -102,7 +125,10 @@ export function Experience() {
           {/* Column 2 — Experience timeline */}
           <motion.div
             className="rounded-2xl p-8 flex flex-col gap-6 relative overflow-hidden"
-            style={{ background: columns[1].bg, border: `1px solid ${columns[1].border}` }}
+            style={{
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+            }}
             custom={1}
             variants={cardVariants}
             initial="hidden"
@@ -111,6 +137,7 @@ export function Experience() {
             <div className="hidden md:block">
               <GhostCursor color="#A78BFA" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
             </div>
+
             <span
               className="text-[11px] tracking-[0.25em] uppercase text-[#A78BFA] relative z-10"
               style={{ fontFamily: 'var(--font-mono)' }}
@@ -126,44 +153,85 @@ export function Experience() {
               />
 
               {timeline.map((item, i) => (
-                <div key={i} className="flex gap-4 pb-5 last:pb-0">
-                  {/* Dot — all glow */}
-                  <div className="relative shrink-0 mt-[6px]">
+                <div key={i} className="flex gap-4 pb-6 last:pb-0">
+                  {/* Dot */}
+                  <div className="relative shrink-0 mt-[5px]">
                     <div
                       className="w-[11px] h-[11px] rounded-full"
                       style={{
-                        background: '#A78BFA',
+                        background: item.current ? '#A78BFA' : 'rgba(167,139,250,0.4)',
                         border: '1px solid rgba(167,139,250,0.6)',
-                        boxShadow: '0 0 8px rgba(167,139,250,0.55)',
+                        boxShadow: item.current ? '0 0 10px rgba(167,139,250,0.7)' : 'none',
                       }}
                     />
                   </div>
 
-                  <div className="flex flex-col gap-0.5">
-                    {item.year && (
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span
-                        className="text-[11px] text-[#A78BFA] tracking-widest"
-                        style={{ fontFamily: 'var(--font-mono)' }}
+                        className="text-[11px] tracking-widest"
+                        style={{ color: '#A78BFA', fontFamily: 'var(--font-mono)' }}
                       >
                         {item.year}
                       </span>
-                    )}
+                      {item.current && (
+                        <span
+                          className="inline-flex items-center gap-1 text-[9px] px-2 py-0.5 rounded-full"
+                          style={{
+                            background: 'rgba(167,139,250,0.12)',
+                            border: '1px solid rgba(167,139,250,0.25)',
+                            color: '#A78BFA',
+                            fontFamily: 'var(--font-mono)',
+                          }}
+                        >
+                          <span className="w-1 h-1 rounded-full bg-[#A78BFA] animate-pulse inline-block" />
+                          now
+                        </span>
+                      )}
+                    </div>
                     <span
                       className="text-sm leading-relaxed text-gray-300"
                       style={{ fontFamily: hf }}
                     >
                       {item.text}
                     </span>
+                    {item.note && (
+                      <span
+                        className="text-[11px] leading-relaxed text-gray-500 italic mt-1"
+                        style={{ fontFamily: hf }}
+                      >
+                        {item.note}
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
+
+              {/* Web3 background note */}
+              <div
+                className="mt-4 rounded-xl p-4"
+                style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}
+              >
+                <p
+                  className="text-xs text-gray-600 leading-relaxed"
+                  style={{ fontFamily: hf }}
+                >
+                  {t.experience.web3_bg_note}
+                </p>
+              </div>
             </div>
           </motion.div>
 
-          {/* Column 3 — Stack */}
+          {/* Column 3 — Stack (Code / AI / Infra) */}
           <motion.div
             className="rounded-2xl p-8 flex flex-col gap-6 relative overflow-hidden"
-            style={{ background: columns[2].bg, border: `1px solid ${columns[2].border}` }}
+            style={{
+              background: 'rgba(0, 180, 160, 0.05)',
+              border: '1px solid rgba(0, 200, 180, 0.18)',
+            }}
             custom={2}
             variants={cardVariants}
             initial="hidden"
@@ -172,6 +240,7 @@ export function Experience() {
             <div className="hidden md:block">
               <GhostCursor color="#34D399" trailLength={40} inertia={0.6} bloomStrength={0.3} bloomRadius={2.0} bloomThreshold={0} fadeDelayMs={300} fadeDurationMs={1500} brightness={0.9} zIndex={0} />
             </div>
+
             <span
               className="text-[11px] tracking-[0.25em] uppercase text-[#34D399] relative z-10"
               style={{ fontFamily: 'var(--font-mono)' }}
@@ -179,33 +248,47 @@ export function Experience() {
               {t.experience.col_stack}
             </span>
 
-            <div className="flex flex-col gap-4 relative z-10">
-              {stack.map((group) => (
-                <div key={group.label} className="flex flex-col gap-1.5">
-                  <span
-                    className="text-[11px] tracking-[0.2em] uppercase text-gray-500"
-                    style={{ fontFamily: 'var(--font-mono)' }}
-                  >
-                    {group.label}
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {group.items.map((item) => (
+            <div className="flex flex-col gap-5 relative z-10">
+              {stack.map((group) => {
+                const colors = stackColors[group.label] ?? {
+                  accent: '#34D399',
+                  bg: 'rgba(52,211,153,0.06)',
+                  border: 'rgba(52,211,153,0.18)',
+                };
+                return (
+                  <div key={group.label} className="flex flex-col gap-2">
+                    {/* Group label with colored dot */}
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-1.5 h-1.5 rounded-full shrink-0"
+                        style={{ background: colors.accent, boxShadow: `0 0 6px ${colors.accent}80` }}
+                      />
                       <span
-                        key={item}
-                        className="text-xs text-gray-300 px-2.5 py-1 rounded-md"
-                        style={{
-                          border: '1px solid rgba(0,200,180,0.15)',
-                          background: 'rgba(0,200,180,0.04)',
-                          fontFamily: hf,
-                          lineHeight: '1.4',
-                        }}
+                        className="text-[10px] tracking-[0.22em] uppercase font-medium"
+                        style={{ color: colors.accent, fontFamily: 'var(--font-mono)' }}
                       >
-                        {item}
+                        {group.label}
                       </span>
-                    ))}
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 pl-3.5">
+                      {group.items.map((item) => (
+                        <span
+                          key={item}
+                          className="text-xs text-gray-300 px-2.5 py-1 rounded-md"
+                          style={{
+                            background: colors.bg,
+                            border: `1px solid ${colors.border}`,
+                            fontFamily: hf,
+                            lineHeight: '1.4',
+                          }}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </motion.div>
 
