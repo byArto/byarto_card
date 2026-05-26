@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 type LineType = 'prompt' | 'system' | 'success';
 
@@ -56,6 +56,8 @@ const FADE_DURATION = 600;
 type Phase = 'typing' | 'lineEnd' | 'scenarioDone' | 'fadeOut';
 
 export function AITerminal() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { margin: '0px 0px -10% 0px' });
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [lineIdx, setLineIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -65,6 +67,10 @@ export function AITerminal() {
   const currentLine = scenario.lines[lineIdx];
 
   useEffect(() => {
+    // Pause the typing loop when the terminal is scrolled out of view —
+    // saves CPU on long pages without changing visible behaviour.
+    if (!isInView) return;
+
     let t: ReturnType<typeof setTimeout> | undefined;
 
     if (phase === 'typing') {
@@ -100,7 +106,7 @@ export function AITerminal() {
     return () => {
       if (t) clearTimeout(t);
     };
-  }, [phase, lineIdx, charIdx, currentLine, scenario.lines.length]);
+  }, [phase, lineIdx, charIdx, currentLine, scenario.lines.length, isInView]);
 
   const completedLines = scenario.lines.slice(0, lineIdx);
   const isContentVisible = phase !== 'fadeOut';
@@ -108,6 +114,7 @@ export function AITerminal() {
 
   return (
     <motion.div
+      ref={containerRef}
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
