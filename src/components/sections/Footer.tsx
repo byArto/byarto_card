@@ -215,67 +215,6 @@ export function Footer() {
               {t.footer.pitch}
             </motion.p>
 
-            {/* Mini social icons row */}
-            <motion.div
-              className="flex items-center gap-3 mt-2"
-              initial={{ opacity: 0, y: 12 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              {/* Common style for all three mini-icons — extracted to reduce duplication */}
-              {[
-                { type: 'a' as const, href: TG_URL, aria: 'Telegram', icon: <Send className="w-[18px] h-[18px]" /> },
-                { type: 'a' as const, href: X_URL, aria: 'X / Twitter', icon: <XIcon className="w-[16px] h-[16px]" /> },
-                { type: 'btn' as const, onClick: handleCopyEmail, aria: 'Copy email', icon: <Mail className="w-[18px] h-[18px]" /> },
-              ].map((item, idx) => {
-                const baseStyle: React.CSSProperties = {
-                  background: 'var(--bg-surface)',
-                  border: '1px solid var(--border-default)',
-                  color: 'var(--text-tertiary)',
-                };
-                const onEnter = (e: React.MouseEvent<HTMLElement>) => {
-                  e.currentTarget.style.borderColor = 'var(--accent-border)';
-                  e.currentTarget.style.background = 'var(--accent-soft)';
-                  e.currentTarget.style.color = 'var(--accent)';
-                };
-                const onLeave = (e: React.MouseEvent<HTMLElement>) => {
-                  e.currentTarget.style.borderColor = 'var(--border-default)';
-                  e.currentTarget.style.background = 'var(--bg-surface)';
-                  e.currentTarget.style.color = 'var(--text-tertiary)';
-                };
-                const cls = 'w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300';
-                if (item.type === 'a') {
-                  return (
-                    <a
-                      key={idx}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={item.aria}
-                      className={cls}
-                      style={baseStyle}
-                      onMouseEnter={onEnter}
-                      onMouseLeave={onLeave}
-                    >
-                      {item.icon}
-                    </a>
-                  );
-                }
-                return (
-                  <button
-                    key={idx}
-                    onClick={item.onClick}
-                    aria-label={item.aria}
-                    className={`${cls} cursor-pointer`}
-                    style={baseStyle}
-                    onMouseEnter={onEnter}
-                    onMouseLeave={onLeave}
-                  >
-                    {item.icon}
-                  </button>
-                );
-              })}
-            </motion.div>
           </div>
 
           {/* RIGHT — Email card + TG/X big square cards */}
