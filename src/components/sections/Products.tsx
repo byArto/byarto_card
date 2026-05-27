@@ -53,6 +53,9 @@ type SubeasyDeviceProps = {
   glowColor: string;
   imageScale: number;
   sizes: string;
+  /** When set, overlays the iOS status-bar zone with this color
+   *  so a dark status bar baked into the screenshot blends into the cream UI. */
+  topMaskColor?: string;
 };
 
 function SubeasyDevice({
@@ -64,6 +67,7 @@ function SubeasyDevice({
   glowColor,
   imageScale,
   sizes,
+  topMaskColor,
 }: SubeasyDeviceProps) {
   const markerProps = variant === 'back'
     ? { 'data-subeasy-device-back': 'true' }
@@ -109,6 +113,19 @@ function SubeasyDevice({
               transformOrigin: 'center center',
             }}
           />
+
+          {/* Status-bar mask — paints over the iOS status bar baked into the screenshot
+             so on the light theme it blends with the app's cream surface. */}
+          {topMaskColor && (
+            <div
+              aria-hidden
+              className="absolute top-0 left-0 right-0 pointer-events-none"
+              style={{
+                height: '7%',
+                background: topMaskColor,
+              }}
+            />
+          )}
 
           <div
             className="absolute inset-0 pointer-events-none"
@@ -331,7 +348,7 @@ export function Products() {
                 }}
               />
 
-              {/* Two phone screenshots — light theme uses /light* assets */}
+              {/* Two phone screenshots — light theme uses /light* assets + cream status-bar mask */}
               <div className="relative flex items-end justify-center gap-2 w-full max-w-[395px] mx-auto">
                 <SubeasyDevice
                   variant="back"
@@ -342,6 +359,7 @@ export function Products() {
                   glowColor={isLight ? 'rgba(217,119,87,0.18)' : 'rgba(0,229,255,0.24)'}
                   imageScale={1.09}
                   sizes="170px"
+                  topMaskColor={isLight ? '#ffffff' : undefined}
                 />
 
                 <SubeasyDevice
@@ -353,6 +371,7 @@ export function Products() {
                   glowColor={isLight ? 'rgba(22,163,74,0.16)' : 'rgba(74,222,128,0.22)'}
                   imageScale={1.03}
                   sizes="210px"
+                  topMaskColor={isLight ? '#ffffff' : undefined}
                 />
               </div>
             </div>
