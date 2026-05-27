@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { Send, ExternalLink } from 'lucide-react';
 import { useLang } from '@/contexts/LangContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface PlatformCardProps {
   href?: string;
@@ -41,13 +42,13 @@ function PlatformCard({ href, icon, color, count, label, caption }: PlatformCard
             {icon}
           </div>
           <span
-            className="text-[10px] tracking-[0.22em] uppercase"
-            style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}
+            className="text-[10px] tracking-[0.22em] uppercase font-medium"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-secondary)' }}
           >
             {label}
           </span>
         </div>
-        {href && <ExternalLink className="w-3.5 h-3.5" style={{ color: 'var(--text-faint)' }} />}
+        {href && <ExternalLink className="w-3.5 h-3.5" style={{ color: 'var(--text-tertiary)' }} />}
       </div>
       <div className="flex flex-col gap-1">
         <span
@@ -56,7 +57,7 @@ function PlatformCard({ href, icon, color, count, label, caption }: PlatformCard
         >
           {count}
         </span>
-        <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
           {caption}
         </p>
       </div>
@@ -77,7 +78,10 @@ export function BeyondCode() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const { lang, hf } = useLang();
-  // theme is read in PlatformCard children via CSS variables — no direct branching here
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
+  // X brand color: white on dark, ink-black on light (mirrors X's official monochrome treatment)
+  const xColor = isLight ? '#141413' : '#e2e8f0';
 
   const YT_ICON = (
     <svg className="w-4 h-4 text-[#ff4444]" viewBox="0 0 24 24" fill="currentColor">
@@ -86,7 +90,7 @@ export function BeyondCode() {
   );
   const TG_ICON = <Send className="w-4 h-4 text-[#29b6f6]" />;
   const X_ICON = (
-    <svg className="w-4 h-4 text-gray-300" viewBox="0 0 24 24" fill="currentColor">
+    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" style={{ color: xColor }}>
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
@@ -193,7 +197,7 @@ export function BeyondCode() {
             <PlatformCard
               href="https://x.com/byArtoCrypto"
               icon={X_ICON}
-              color="#e2e8f0"
+              color={xColor}
               count="1.4K"
               label="X / Twitter"
               caption="@byArtoCrypto"
