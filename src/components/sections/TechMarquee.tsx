@@ -42,7 +42,7 @@ export function TechMarquee() {
               <span
                 className="text-lg md:text-xl font-medium whitespace-nowrap transition-colors duration-300"
                 style={{
-                  fontFamily: 'var(--font-heading)',
+                  fontFamily: 'var(--font-heading-ru)',
                   color: 'var(--text-muted)',
                 }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = 'var(--accent)'; }}
