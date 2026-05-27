@@ -36,12 +36,46 @@ export function Hero() {
       >
         {isLight ? (
           <>
+            {/* 1. Cream base */}
             <div className="absolute inset-0" style={{ background: 'var(--bg-base)' }} />
+
+            {/* 2. Hero photo — inverted (dark→light), warm sepia treatment so it
+                  blends into the cream palette while remaining recognisable.
+                  Low opacity so it sits as a ghosted backdrop. */}
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{
+                backgroundImage: 'url(/hero-bg.png)',
+                filter:
+                  'invert(1) sepia(0.85) saturate(1.5) hue-rotate(-20deg) brightness(0.95) contrast(0.85)',
+                opacity: 0.5,
+              }}
+            />
+
+            {/* 3. Vertical fade — image dissolves into cream at top + bottom */}
             <div
               className="absolute inset-0"
               style={{
                 background:
-                  'radial-gradient(ellipse 70% 60% at 30% 70%, rgba(217,119,87,0.14) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 30%, rgba(217,119,87,0.08) 0%, transparent 65%)',
+                  'linear-gradient(to bottom, var(--bg-base) 0%, color-mix(in srgb, var(--bg-base) 40%, transparent) 25%, color-mix(in srgb, var(--bg-base) 30%, transparent) 75%, var(--bg-base) 100%)',
+              }}
+            />
+
+            {/* 4. Horizontal vignette — edges fade to cream */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'linear-gradient(to right, var(--bg-base) 0%, transparent 22%, transparent 78%, var(--bg-base) 100%)',
+              }}
+            />
+
+            {/* 5. Terra-cotta warm accent radials on top */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'radial-gradient(ellipse 70% 60% at 30% 70%, rgba(217,119,87,0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 30%, rgba(217,119,87,0.07) 0%, transparent 65%)',
               }}
             />
           </>
