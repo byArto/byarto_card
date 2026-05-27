@@ -331,26 +331,26 @@ export function Products() {
                 }}
               />
 
-              {/* Two phone screenshots */}
+              {/* Two phone screenshots — light theme uses /light* assets */}
               <div className="relative flex items-end justify-center gap-2 w-full max-w-[395px] mx-auto">
                 <SubeasyDevice
                   variant="back"
-                  src="/2.png"
+                  src={isLight ? '/light1.jpg' : '/2.png'}
                   alt="SubEasy Detail"
                   width="46%"
                   transform="translateY(24px) rotate(-6deg)"
-                  glowColor="rgba(0,229,255,0.24)"
+                  glowColor={isLight ? 'rgba(217,119,87,0.18)' : 'rgba(0,229,255,0.24)'}
                   imageScale={1.09}
                   sizes="170px"
                 />
 
                 <SubeasyDevice
                   variant="front"
-                  src="/1.png"
+                  src={isLight ? '/light.jpg' : '/1.png'}
                   alt="SubEasy Subscriptions"
                   width="54%"
                   transform="rotate(3deg)"
-                  glowColor="rgba(74,222,128,0.22)"
+                  glowColor={isLight ? 'rgba(22,163,74,0.16)' : 'rgba(74,222,128,0.22)'}
                   imageScale={1.03}
                   sizes="210px"
                 />

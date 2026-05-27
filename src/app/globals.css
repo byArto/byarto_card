@@ -45,11 +45,11 @@
 }
 
 :root[data-theme='light'] {
-  /* Surfaces — Claude vellum aesthetic */
-  --bg-base: #faf9f5;          /* vellum-white */
-  --bg-surface: #ffffff;       /* snow-white */
-  --bg-elevated: #ffffff;
-  --bg-overlay: rgba(250, 249, 245, 0.7);
+  /* Surfaces — warmer peach-cream tone, closer to Claude's tactile paper feel */
+  --bg-base: #f6ecdc;          /* warm peach-cream */
+  --bg-surface: #fdf8ee;       /* warm off-white */
+  --bg-elevated: #fdf8ee;
+  --bg-overlay: rgba(246, 236, 220, 0.7);
 
   /* Text */
   --text-primary: #141413;     /* ink-black */
@@ -58,26 +58,26 @@
   --text-muted: #9c9a92;       /* stone */
   --text-faint: #b8b6ad;
 
-  /* Borders — parchment system */
-  --border-subtle: rgba(31, 30, 29, 0.06);
-  --border-default: #dedcd1;   /* parchment */
-  --border-strong: rgba(31, 30, 29, 0.18);
+  /* Borders — warmer parchment system */
+  --border-subtle: rgba(74, 50, 30, 0.06);
+  --border-default: #e6d6bd;   /* warm parchment */
+  --border-strong: rgba(74, 50, 30, 0.20);
 
-  /* Accents — preserve cyan identity but darker + terra-cotta for hot CTAs */
-  --accent: #0891b2;           /* deep cyan, readable on cream */
-  --accent-hot: #d97757;       /* terra-cotta — Claude signature */
-  --accent-soft: rgba(8, 145, 178, 0.06);
-  --accent-border: rgba(8, 145, 178, 0.22);
-  --accent-strong: rgba(8, 145, 178, 0.32);
-  --accent-glow: rgba(8, 145, 178, 0.12);
+  /* Accents — terra-cotta as the single warm signature */
+  --accent: #d97757;           /* terra-cotta — Claude signature */
+  --accent-hot: #d97757;
+  --accent-soft: rgba(217, 119, 87, 0.08);
+  --accent-border: rgba(217, 119, 87, 0.26);
+  --accent-strong: rgba(217, 119, 87, 0.40);
+  --accent-glow: rgba(217, 119, 87, 0.18);
 
   /* Scrollbar */
-  --scrollbar-track: #faf9f5;
-  --scrollbar-thumb: #c5c3b8;
+  --scrollbar-track: #f6ecdc;
+  --scrollbar-thumb: #d4c4a8;
   --scrollbar-thumb-hover: #9c9a92;
 
   /* Selection */
-  --selection-bg: rgba(217, 119, 87, 0.25);
+  --selection-bg: rgba(217, 119, 87, 0.30);
   --selection-fg: #141413;
 }
 

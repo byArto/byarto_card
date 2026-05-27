@@ -2,6 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type LineType = 'prompt' | 'system' | 'success';
 
@@ -58,6 +59,8 @@ type Phase = 'typing' | 'lineEnd' | 'scenarioDone' | 'fadeOut';
 export function AITerminal() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { margin: '0px 0px -10% 0px' });
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const [scenarioIdx, setScenarioIdx] = useState(0);
   const [lineIdx, setLineIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -120,8 +123,9 @@ export function AITerminal() {
       transition={{ duration: 0.6, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="w-full relative"
       style={{
-        background:
-          'linear-gradient(180deg, rgba(10,14,20,1) 0%, rgba(6,10,14,1) 100%)',
+        background: isLight
+          ? 'linear-gradient(180deg, #fdf8ee 0%, #f7eddc 100%)'
+          : 'linear-gradient(180deg, rgba(10,14,20,1) 0%, rgba(6,10,14,1) 100%)',
         fontFamily: 'var(--font-mono)',
       }}
     >
@@ -129,8 +133,8 @@ export function AITerminal() {
       <div
         className="flex items-center justify-between px-4 py-2.5"
         style={{
-          borderBottom: '1px solid rgba(255,255,255,0.06)',
-          background: 'rgba(0,0,0,0.3)',
+          borderBottom: `1px solid ${isLight ? 'rgba(74,50,30,0.1)' : 'rgba(255,255,255,0.06)'}`,
+          background: isLight ? 'rgba(217,119,87,0.05)' : 'rgba(0,0,0,0.3)',
         }}
       >
         <div className="flex items-center gap-[6px]">
@@ -143,9 +147,10 @@ export function AITerminal() {
           initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="text-[10px] tracking-[0.15em] text-gray-500"
+          className="text-[10px] tracking-[0.15em]"
+          style={{ color: isLight ? '#9c9a92' : '#6b7280' }}
         >
-          ~/byarto · <span className="text-gray-400">{scenario.name}</span>
+          ~/byarto · <span style={{ color: isLight ? '#73726c' : '#9ca3af' }}>{scenario.name}</span>
         </motion.span>
         <span className="w-[42px]" />
       </div>
@@ -158,7 +163,7 @@ export function AITerminal() {
           className="flex flex-col gap-1.5 text-[12px] leading-[1.65]"
         >
           {completedLines.map((line, i) => (
-            <TerminalLine key={`done-${scenarioIdx}-${i}`} line={line} text={line.text} />
+            <TerminalLine key={`done-${scenarioIdx}-${i}`} line={line} text={line.text} isLight={isLight} />
           ))}
 
           {showTypingLine && currentLine && (
@@ -166,13 +171,14 @@ export function AITerminal() {
               line={currentLine}
               text={currentLine.text.slice(0, charIdx)}
               cursor={phase === 'typing'}
+              isLight={isLight}
             />
           )}
 
           {phase === 'scenarioDone' && (
             <div className="flex items-center gap-1.5 mt-1">
-              <span className="text-[#00E5FF] font-medium">$</span>
-              <Cursor />
+              <span className="font-medium" style={{ color: isLight ? '#d97757' : '#00E5FF' }}>$</span>
+              <Cursor isLight={isLight} />
             </div>
           )}
         </motion.div>
@@ -185,30 +191,48 @@ function TerminalLine({
   line,
   text,
   cursor,
+  isLight,
 }: {
   line: Line;
   text: string;
   cursor?: boolean;
+  isLight: boolean;
 }) {
-  const prefixClass =
-    line.type === 'prompt' ? 'text-[#00E5FF]' :
-    line.type === 'success' ? 'text-emerald-400' : 'text-gray-500';
-  const textClass =
-    line.type === 'prompt' ? 'text-gray-100' :
-    line.type === 'success' ? 'text-emerald-300' : 'text-gray-400';
+  /* Theme-aware colors:
+     - prompt:  bright terminal accent (cyan on dark, terra-cotta on light)
+     - success: green (lighter on dark, darker on light for contrast)
+     - system:  muted gray
+     - body text: high-contrast primary text */
+  const prefixColor = isLight
+    ? line.type === 'prompt' ? '#d97757'
+      : line.type === 'success' ? '#16a34a'
+      : '#9c9a92'
+    : line.type === 'prompt' ? '#00E5FF'
+      : line.type === 'success' ? '#34d399'
+      : '#6b7280';
+
+  const textColor = isLight
+    ? line.type === 'prompt' ? '#141413'
+      : line.type === 'success' ? '#15803d'
+      : '#3d3d3a'
+    : line.type === 'prompt' ? '#f3f4f6'
+      : line.type === 'success' ? '#86efac'
+      : '#9ca3af';
 
   return (
     <div className="flex items-baseline gap-1.5">
-      <span className={`${prefixClass} shrink-0 font-medium`}>{line.prefix}</span>
-      <span className={`${textClass} break-words`}>
+      <span className="shrink-0 font-medium" style={{ color: prefixColor }}>{line.prefix}</span>
+      <span className="break-words" style={{ color: textColor }}>
         {text}
-        {cursor && <Cursor inline />}
+        {cursor && <Cursor inline isLight={isLight} />}
       </span>
     </div>
   );
 }
 
-function Cursor({ inline }: { inline?: boolean } = {}) {
+function Cursor({ inline, isLight }: { inline?: boolean; isLight: boolean }) {
+  const color = isLight ? '#d97757' : '#00E5FF';
+  const glow = isLight ? 'rgba(217,119,87,0.5)' : 'rgba(0,229,255,0.7)';
   return (
     <motion.span
       aria-hidden
@@ -218,8 +242,8 @@ function Cursor({ inline }: { inline?: boolean } = {}) {
       style={{
         width: '7px',
         height: '13px',
-        background: '#00E5FF',
-        boxShadow: '0 0 8px rgba(0,229,255,0.7)',
+        background: color,
+        boxShadow: `0 0 8px ${glow}`,
         verticalAlign: 'middle',
         transform: 'translateY(2px)',
       }}

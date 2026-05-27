@@ -60,7 +60,7 @@ function AppContent() {
             <FuzzyText
               fontSize="0.9rem"
               fontWeight={700}
-              color="#00E5FF"
+              color={theme === 'light' ? '#d97757' : '#00E5FF'}
               baseIntensity={0.05}
               hoverIntensity={0.5}
               className="-ml-[60px] -mr-[30px]"
@@ -74,7 +74,12 @@ function AppContent() {
               style={{
                 height: '22px',
                 width: 'auto',
-                filter: 'hue-rotate(60deg) saturate(1.3) brightness(1.1)',
+                /* On light theme: shift original hue to terra-cotta and darken slightly so it reads on cream;
+                   On dark: original cyan-shifted treatment */
+                filter:
+                  theme === 'light'
+                    ? 'hue-rotate(310deg) saturate(1.8) brightness(0.85) contrast(1.1)'
+                    : 'hue-rotate(60deg) saturate(1.3) brightness(1.1)',
               }}
             />
           </a>

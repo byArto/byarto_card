@@ -22,11 +22,11 @@ type StackPalette = { accent: string; bg: string; border: string };
 function getStackColors(isLight: boolean): Record<string, StackPalette> {
   if (isLight) {
     return {
-      Code:  { accent: '#0891b2', bg: 'rgba(8,145,178,0.07)', border: 'rgba(8,145,178,0.22)' },
+      Code:  { accent: '#d97757', bg: 'rgba(217,119,87,0.08)', border: 'rgba(217,119,87,0.24)' },
       AI:    { accent: '#7c3aed', bg: 'rgba(124,58,237,0.07)', border: 'rgba(124,58,237,0.22)' },
       Infra: { accent: '#059669', bg: 'rgba(5,150,105,0.07)', border: 'rgba(5,150,105,0.22)' },
-      'Integrations & QA': { accent: '#b45309', bg: 'rgba(180,83,9,0.07)', border: 'rgba(180,83,9,0.22)' },
-      'Интеграции и QA':   { accent: '#b45309', bg: 'rgba(180,83,9,0.07)', border: 'rgba(180,83,9,0.22)' },
+      'Integrations & QA': { accent: '#9a3412', bg: 'rgba(154,52,18,0.07)', border: 'rgba(154,52,18,0.22)' },
+      'Интеграции и QA':   { accent: '#9a3412', bg: 'rgba(154,52,18,0.07)', border: 'rgba(154,52,18,0.22)' },
     };
   }
   return {
