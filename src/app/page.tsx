@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import dynamic from 'next/dynamic';
+import { Sun, Moon } from 'lucide-react';
 import PillNav from '@/components/ui/PillNav';
 import FuzzyText from '@/components/ui/FuzzyText';
 import Hero from '@/components/sections/Hero';
@@ -12,6 +13,7 @@ import Products from '@/components/sections/Products';
 import BeyondCode from '@/components/sections/BeyondCode';
 import TechMarquee from '@/components/sections/TechMarquee';
 import { LangProvider, useLang } from '@/contexts/LangContext';
+import { ThemeProvider, useTheme } from '@/contexts/ThemeContext';
 
 const Footer = dynamic(() => import('@/components/sections/Footer'), {
   ssr: false,
@@ -35,6 +37,7 @@ function ScrollFade({ children }: { children: React.ReactNode }) {
 
 function AppContent() {
   const { lang, setLang, t } = useLang();
+  const { theme, toggleTheme } = useTheme();
 
   const navItems = [
     { label: t.nav.about, href: '#about' },
@@ -44,7 +47,7 @@ function AppContent() {
   ];
 
   return (
-    <main className="relative bg-[#0A0A0A] min-h-screen">
+    <main className="relative min-h-screen" style={{ background: 'var(--bg-base)' }}>
       {/* Top bar — logo (left) + lang toggle (right), aligned with Hero content container */}
       <div className="fixed top-8 left-0 right-0 z-[100] pointer-events-none">
         <div className="w-full px-6 md:px-16 lg:px-24">
@@ -76,42 +79,72 @@ function AppContent() {
             />
           </a>
 
-          {/* Language toggle */}
-          <div
-            className="pointer-events-auto flex items-center rounded-full px-3 py-1.5"
-            style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.08)',
-              backdropFilter: 'blur(12px)',
-            }}
-          >
+          {/* Right group: Theme toggle + Lang toggle */}
+          <div className="pointer-events-auto flex items-center gap-2">
+            {/* Theme toggle */}
             <button
-              onClick={() => setLang('en')}
-              className="transition-colors duration-200 px-1"
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+              className="flex items-center justify-center rounded-full w-9 h-9 transition-all duration-300"
               style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '11px',
-                fontWeight: 600,
-                letterSpacing: '0.1em',
-                color: lang === 'en' ? '#00E5FF' : '#6B7280',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-default)',
+                backdropFilter: 'blur(12px)',
+                color: 'var(--text-tertiary)',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.color = 'var(--accent)';
+                (e.currentTarget as HTMLElement).style.borderColor = 'var(--accent-border)';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.color = 'var(--text-tertiary)';
+                (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-default)';
               }}
             >
-              EN
+              {theme === 'dark' ? (
+                <Sun className="w-[14px] h-[14px]" />
+              ) : (
+                <Moon className="w-[14px] h-[14px]" />
+              )}
             </button>
-            <span style={{ color: '#374151', fontFamily: 'var(--font-mono)', fontSize: '10px', margin: '0 4px' }}>|</span>
-            <button
-              onClick={() => setLang('ru')}
-              className="transition-colors duration-200 px-1"
+
+            {/* Language toggle */}
+            <div
+              className="flex items-center rounded-full px-3 py-1.5"
               style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '11px',
-                fontWeight: 600,
-                letterSpacing: '0.1em',
-                color: lang === 'ru' ? '#00E5FF' : '#6B7280',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border-default)',
+                backdropFilter: 'blur(12px)',
               }}
             >
-              RU
-            </button>
+              <button
+                onClick={() => setLang('en')}
+                className="transition-colors duration-200 px-1"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  color: lang === 'en' ? 'var(--accent)' : 'var(--text-muted)',
+                }}
+              >
+                EN
+              </button>
+              <span style={{ color: 'var(--text-faint)', fontFamily: 'var(--font-mono)', fontSize: '10px', margin: '0 4px' }}>|</span>
+              <button
+                onClick={() => setLang('ru')}
+                className="transition-colors duration-200 px-1"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  color: lang === 'ru' ? 'var(--accent)' : 'var(--text-muted)',
+                }}
+              >
+                RU
+              </button>
+            </div>
           </div>
         </div>
         </div>
@@ -122,10 +155,10 @@ function AppContent() {
         <div className="pointer-events-auto">
           <PillNav
             items={navItems}
-            baseColor="#0A0A0A"
-            pillColor="rgba(255,255,255,0.06)"
-            hoveredPillTextColor="#00E5FF"
-            pillTextColor="#9CA3AF"
+            baseColor="var(--bg-base)"
+            pillColor="var(--bg-elevated)"
+            hoveredPillTextColor="var(--accent)"
+            pillTextColor="var(--text-tertiary)"
           />
         </div>
       </header>
@@ -143,8 +176,10 @@ function AppContent() {
 
 export default function Home() {
   return (
-    <LangProvider>
-      <AppContent />
-    </LangProvider>
+    <ThemeProvider>
+      <LangProvider>
+        <AppContent />
+      </LangProvider>
+    </ThemeProvider>
   );
 }

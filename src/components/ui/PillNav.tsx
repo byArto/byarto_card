@@ -142,9 +142,9 @@ export const PillNav: React.FC<PillNavProps> = ({
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >
-          <span className={`w-5 h-0.5 bg-white/70 transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-          <span className={`w-5 h-0.5 bg-white/70 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
-          <span className={`w-5 h-0.5 bg-white/70 transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+          <span className={`w-5 h-0.5 bg-[color:var(--text-secondary)] transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+          <span className={`w-5 h-0.5 bg-[color:var(--text-secondary)] transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
+          <span className={`w-5 h-0.5 bg-[color:var(--text-secondary)] transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
         </button>
 
         {/* Desktop nav */}
@@ -152,8 +152,8 @@ export const PillNav: React.FC<PillNavProps> = ({
           className="hidden md:flex items-center rounded-full px-1.5"
           style={{
             height: 'var(--nav-h)',
-            background: 'rgba(255,255,255,0.06)',
-            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-default)',
             backdropFilter: 'blur(12px)',
           }}
         >
@@ -183,7 +183,7 @@ export const PillNav: React.FC<PillNavProps> = ({
                     <span
                       className="hover-circle absolute left-1/2 bottom-0 rounded-full z-[1] block pointer-events-none"
                       style={{
-                        background: 'rgba(0,229,255,0.12)',
+                        background: 'var(--accent-soft)',
                         willChange: 'transform',
                       }}
                       aria-hidden="true"
@@ -212,7 +212,7 @@ export const PillNav: React.FC<PillNavProps> = ({
                     {isActive && (
                       <span
                         className="absolute left-1/2 -bottom-1 -translate-x-1/2 w-1 h-1 rounded-full z-[4]"
-                        style={{ background: '#00E5FF' }}
+                        style={{ background: 'var(--accent)' }}
                         aria-hidden="true"
                       />
                     )}
@@ -229,8 +229,8 @@ export const PillNav: React.FC<PillNavProps> = ({
         <div
           className="md:hidden absolute top-full right-4 w-48 rounded-2xl p-2 z-50"
           style={{
-            background: 'rgba(14,14,14,0.95)',
-            border: '1px solid rgba(255,255,255,0.08)',
+            background: 'var(--bg-elevated)',
+            border: '1px solid var(--border-default)',
             backdropFilter: 'blur(20px)',
           }}
         >
@@ -238,7 +238,10 @@ export const PillNav: React.FC<PillNavProps> = ({
             <a
               key={item.href}
               href={item.href}
-              className="block py-3 px-4 text-sm text-gray-300 hover:text-[#00E5FF] transition-colors rounded-xl"
+              className="block py-3 px-4 text-sm transition-colors rounded-xl"
+              style={{ color: 'var(--text-secondary)' }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = 'var(--accent)'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'var(--text-secondary)'; }}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {item.label}

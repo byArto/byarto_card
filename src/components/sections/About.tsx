@@ -5,9 +5,10 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import { useLang } from '@/contexts/LangContext';
 
-const ACCENT_CYAN = 'text-[#00E5FF] font-medium';
-const ACCENT_WHITE = 'text-white font-medium';
-const ACCENT_SOFT = 'text-gray-300';
+/** Theme-aware text accents via CSS vars. */
+const ACCENT_CYAN = 'text-[color:var(--accent)] font-medium';
+const ACCENT_WHITE = 'text-[color:var(--text-primary)] font-medium';
+const ACCENT_SOFT = 'text-[color:var(--text-secondary)]';
 
 export function About() {
   const ref = useRef(null);
@@ -25,12 +26,15 @@ export function About() {
           transition={{ duration: 0.6 }}
         >
           <span
-            className="text-xs tracking-[0.3em] uppercase text-[#00E5FF]"
-            style={{ fontFamily: 'var(--font-mono)' }}
+            className="text-xs tracking-[0.3em] uppercase"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)' }}
           >
             {t.about.label}
           </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-[rgba(0,229,255,0.2)] to-transparent" />
+          <div
+            className="flex-1 h-px"
+            style={{ background: 'linear-gradient(to right, var(--accent-border), transparent)' }}
+          />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -43,12 +47,12 @@ export function About() {
           >
             {lang === 'ru' ? (
               <>
-                <p className="text-lg md:text-xl leading-relaxed text-gray-300" style={{ fontFamily: hf }}>
+                <p className="text-lg md:text-xl leading-relaxed text-[color:var(--text-secondary)]" style={{ fontFamily: hf }}>
                   Меня зовут Артур, в сети — <span className={ACCENT_WHITE}>byArto</span>.{' '}
                   <span className={ACCENT_CYAN}>AI-Powered Fullstack-разработчик</span>. Работаю по методологии AI-powered development: мульти-агентный воркфлоу{' '}
                   <span className={ACCENT_SOFT}>(Cursor + Claude Code + Codex)</span>, оркестрация LLM под задачу, архитектура до кода.
                 </p>
-                <p className="text-lg md:text-xl leading-relaxed text-gray-300" style={{ fontFamily: hf }}>
+                <p className="text-lg md:text-xl leading-relaxed text-[color:var(--text-secondary)]" style={{ fontFamily: hf }}>
                   За год — <span className={ACCENT_WHITE}>6+ задеплоенных продуктов</span>.{' '}
                   <span className={ACCENT_CYAN}>SubEasy</span> в{' '}
                   <span className={ACCENT_WHITE}>Telegram App Center</span> с платящими пользователями.{' '}
@@ -56,19 +60,19 @@ export function About() {
                   <span className={ACCENT_WHITE}>Co-founder & CTO</span>. Коммерческая разработка в найме под{' '}
                   <span className={ACCENT_WHITE}>NDA</span>: Telegram Mini Apps, RAG-боты, маркетплейсы, парсеры.
                 </p>
-                <p className="text-lg md:text-xl leading-relaxed text-gray-400" style={{ fontFamily: hf }}>
+                <p className="text-lg md:text-xl leading-relaxed text-[color:var(--text-tertiary)]" style={{ fontFamily: hf }}>
                   До разработки — 5 лет в Web3-медиа (<span className={ACCENT_WHITE}>30K+</span> аудитории, партнёр{' '}
                   <span className={ACCENT_WHITE}>BingX</span>). Поэтому понимаю не только код, но и продуктовую боль конечного пользователя.
                 </p>
               </>
             ) : (
               <>
-                <p className="text-lg md:text-xl leading-relaxed text-gray-300" style={{ fontFamily: hf }}>
+                <p className="text-lg md:text-xl leading-relaxed text-[color:var(--text-secondary)]" style={{ fontFamily: hf }}>
                   My name is Artur, online — <span className={ACCENT_WHITE}>byArto</span>.{' '}
                   <span className={ACCENT_CYAN}>AI-Powered Fullstack Developer</span>. I work with an AI-powered development methodology: multi-agent workflow{' '}
                   <span className={ACCENT_SOFT}>(Cursor + Claude Code + Codex)</span>, LLM orchestration per task, architecture before code.
                 </p>
-                <p className="text-lg md:text-xl leading-relaxed text-gray-300" style={{ fontFamily: hf }}>
+                <p className="text-lg md:text-xl leading-relaxed text-[color:var(--text-secondary)]" style={{ fontFamily: hf }}>
                   In the past year — <span className={ACCENT_WHITE}>6+ deployed products</span>.{' '}
                   <span className={ACCENT_CYAN}>SubEasy</span> is live in the{' '}
                   <span className={ACCENT_WHITE}>Telegram App Center</span> with paying users.{' '}
@@ -76,7 +80,7 @@ export function About() {
                   <span className={ACCENT_WHITE}>Co-founder & CTO</span>. Commercial development under an{' '}
                   <span className={ACCENT_WHITE}>NDA</span> contract: Telegram Mini Apps, RAG bots, marketplace integrations, parsers.
                 </p>
-                <p className="text-lg md:text-xl leading-relaxed text-gray-400" style={{ fontFamily: hf }}>
+                <p className="text-lg md:text-xl leading-relaxed text-[color:var(--text-tertiary)]" style={{ fontFamily: hf }}>
                   Before development — 5 years in Web3 media (<span className={ACCENT_WHITE}>30K+</span> audience,{' '}
                   <span className={ACCENT_WHITE}>BingX</span> partner). That's why I understand not just code, but the product pain of the end user.
                 </p>
@@ -92,8 +96,14 @@ export function About() {
             transition={{ duration: 0.7, delay: 0.3 }}
           >
             <div className="relative w-72 h-96 md:w-80 md:h-[480px]">
-              <div className="absolute inset-0 rounded-2xl bg-[rgba(0,229,255,0.06)] blur-2xl scale-110" />
-              <div className="absolute inset-0 rounded-2xl border border-[rgba(0,229,255,0.12)]" />
+              <div
+                className="absolute inset-0 rounded-2xl blur-2xl scale-110"
+                style={{ background: 'var(--accent-glow)' }}
+              />
+              <div
+                className="absolute inset-0 rounded-2xl"
+                style={{ border: '1px solid var(--accent-border)' }}
+              />
               <Image
                 src="/IMG_4754.JPG"
                 alt="Artur byArto"

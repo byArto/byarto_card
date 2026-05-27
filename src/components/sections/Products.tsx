@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { ExternalLink, Zap, Globe, Trophy } from 'lucide-react';
 import Image from 'next/image';
 import { useLang } from '@/contexts/LangContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const icons = [Zap, Globe, Trophy];
 const accents = ['#A78BFA', '#34D399', '#F59E0B'];
@@ -139,6 +140,8 @@ export function Products() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const { t, hf } = useLang();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const bizzbot = t.products.bizzbot;
 
   const compactProjects = t.products.compact.map((p, i) => ({
@@ -160,20 +163,23 @@ export function Products() {
           transition={{ duration: 0.5 }}
         >
           <span
-            className="text-xs tracking-[0.3em] uppercase text-[#00E5FF] shrink-0"
-            style={{ fontFamily: 'var(--font-mono)' }}
+            className="text-xs tracking-[0.3em] uppercase shrink-0"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)' }}
           >
             {t.products.label}
           </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-[rgba(0,229,255,0.25)] to-transparent" />
+          <div
+            className="flex-1 h-px"
+            style={{ background: 'linear-gradient(to right, var(--accent-strong), transparent)' }}
+          />
         </motion.div>
 
         {/* Hero card — SubEasy */}
         <motion.div
           className="rounded-2xl overflow-hidden relative"
           style={{
-            background: 'rgba(0, 229, 255, 0.03)',
-            border: '1px solid rgba(0, 229, 255, 0.18)',
+            background: isLight ? 'var(--bg-surface)' : 'rgba(0, 229, 255, 0.03)',
+            border: `1px solid ${isLight ? 'var(--border-default)' : 'rgba(0, 229, 255, 0.18)'}`,
           }}
           initial={{ opacity: 0, y: 32 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -194,17 +200,22 @@ export function Products() {
               <div className="flex flex-col gap-6">
                 {/* Number badge + Tag row */}
                 <div className="flex items-center gap-5">
-                  <NumberBadge number="01" color="#4ADE80" />
+                  <NumberBadge number="01" color={isLight ? '#16a34a' : '#4ADE80'} />
                   <div className="flex items-center gap-3 flex-wrap">
                     <span
-                      className="px-3 py-1 text-[10px] font-medium tracking-[0.2em] uppercase bg-[rgba(0,229,255,0.1)] text-[#00E5FF] rounded-full border border-[rgba(0,229,255,0.25)]"
-                      style={{ fontFamily: 'var(--font-mono)' }}
+                      className="px-3 py-1 text-[10px] font-medium tracking-[0.2em] uppercase rounded-full"
+                      style={{
+                        background: 'var(--accent-soft)',
+                        color: 'var(--accent)',
+                        border: '1px solid var(--accent-strong)',
+                        fontFamily: 'var(--font-mono)',
+                      }}
                     >
                       {t.products.flagship_tag}
                     </span>
                     <span
-                      className="text-[10px] tracking-widest uppercase text-gray-500"
-                      style={{ fontFamily: 'var(--font-mono)' }}
+                      className="text-[10px] tracking-widest uppercase"
+                      style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}
                     >
                       {t.products.flagship_sub}
                     </span>
@@ -217,11 +228,12 @@ export function Products() {
                     className="text-4xl md:text-5xl font-bold mb-3 leading-none"
                     style={{ fontFamily: hf }}
                   >
-                    <span className="text-white">Sub</span><span style={{ color: '#4ADE80' }}>Easy</span>
+                    <span style={{ color: 'var(--text-primary)' }}>Sub</span>
+                    <span style={{ color: isLight ? '#16a34a' : '#4ADE80' }}>Easy</span>
                   </h2>
                   <p
-                    className="text-base text-gray-400 leading-relaxed max-w-md"
-                    style={{ fontFamily: hf }}
+                    className="text-base leading-relaxed max-w-md"
+                    style={{ fontFamily: hf, color: 'var(--text-tertiary)' }}
                   >
                     {t.products.subeasy_desc}
                   </p>
@@ -233,11 +245,11 @@ export function Products() {
                     <div key={fact} className="flex items-center gap-3">
                       <div
                         className="w-1.5 h-1.5 rounded-full shrink-0"
-                        style={{ background: '#00E5FF', boxShadow: '0 0 6px rgba(0,229,255,0.8)' }}
+                        style={{ background: 'var(--accent)', boxShadow: '0 0 6px var(--accent-strong)' }}
                       />
                       <span
-                        className="text-sm text-gray-300"
-                        style={{ fontFamily: hf }}
+                        className="text-sm"
+                        style={{ fontFamily: hf, color: 'var(--text-secondary)' }}
                       >
                         {fact}
                       </span>
@@ -268,10 +280,11 @@ export function Products() {
                   {['Python', 'aiogram', 'SQLite', 'Telegram Bot API'].map((tech) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 text-xs rounded-full text-gray-400"
+                      className="px-3 py-1 text-xs rounded-full"
                       style={{
-                        background: 'rgba(255,255,255,0.04)',
-                        border: '1px solid rgba(255,255,255,0.08)',
+                        background: isLight ? 'rgba(31,30,29,0.04)' : 'rgba(255,255,255,0.04)',
+                        border: `1px solid ${isLight ? 'var(--border-default)' : 'rgba(255,255,255,0.08)'}`,
+                        color: 'var(--text-tertiary)',
                         fontFamily: 'var(--font-mono)',
                       }}
                     >
@@ -354,21 +367,32 @@ export function Products() {
           transition={{ duration: 0.8, delay: 0.3 }}
           aria-hidden
         >
-          <div className="h-px w-24 md:w-32 bg-gradient-to-r from-transparent to-[rgba(0,229,255,0.25)]" />
           <div
-            className="w-1.5 h-1.5 rounded-full bg-[#00E5FF]"
-            style={{ boxShadow: '0 0 10px #00E5FF, 0 0 20px rgba(0,229,255,0.4)' }}
+            className="h-px w-24 md:w-32"
+            style={{ background: 'linear-gradient(to right, transparent, var(--accent-strong))' }}
           />
-          <div className="h-px w-24 md:w-32 bg-gradient-to-l from-transparent to-[rgba(0,229,255,0.25)]" />
+          <div
+            className="w-1.5 h-1.5 rounded-full"
+            style={{
+              background: 'var(--accent)',
+              boxShadow: '0 0 10px var(--accent), 0 0 20px var(--accent-glow)',
+            }}
+          />
+          <div
+            className="h-px w-24 md:w-32"
+            style={{ background: 'linear-gradient(to left, transparent, var(--accent-strong))' }}
+          />
         </motion.div>
 
         {/* BizzBot — full-width horizontal card (phone LEFT, content RIGHT) */}
         <motion.article
           className="relative overflow-hidden rounded-2xl"
           style={{
-            background: 'linear-gradient(140deg, rgba(28,24,22,0.98) 0%, rgba(18,17,17,0.98) 52%, rgba(58,34,21,0.95) 100%)',
+            background: isLight
+              ? 'linear-gradient(140deg, #ffffff 0%, #fffaf6 52%, #fcefe5 100%)'
+              : 'linear-gradient(140deg, rgba(28,24,22,0.98) 0%, rgba(18,17,17,0.98) 52%, rgba(58,34,21,0.95) 100%)',
             border: '1px solid rgba(201,90,40,0.22)',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.28)',
+            boxShadow: isLight ? '0 20px 60px rgba(201,90,40,0.10)' : '0 20px 60px rgba(0,0,0,0.28)',
           }}
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -488,13 +512,13 @@ export function Products() {
                       <div className="flex flex-col gap-1 min-w-0">
                         <span
                           className="text-[10px] tracking-[0.22em] uppercase"
-                          style={{ color: '#F3D4C0', fontFamily: 'var(--font-mono)' }}
+                          style={{ color: isLight ? '#7c2d12' : '#F3D4C0', fontFamily: 'var(--font-mono)' }}
                         >
                           {bizzbot.badge}
                         </span>
                         <span
-                          className="text-xs text-[#C5B5A9]"
-                          style={{ fontFamily: 'var(--font-mono)' }}
+                          className="text-xs"
+                          style={{ color: isLight ? '#9a6f5a' : '#C5B5A9', fontFamily: 'var(--font-mono)' }}
                         >
                           {bizzbot.role}
                         </span>
@@ -517,8 +541,8 @@ export function Products() {
                   <div className="flex flex-col gap-4">
                     <div>
                       <h3
-                        className="text-4xl md:text-[3.25rem] font-bold leading-none mb-2.5 text-white"
-                        style={{ fontFamily: hf }}
+                        className="text-4xl md:text-[3.25rem] font-bold leading-none mb-2.5"
+                        style={{ fontFamily: hf, color: isLight ? '#1f1208' : '#ffffff' }}
                       >
                         BizzBot
                       </h3>
@@ -532,7 +556,7 @@ export function Products() {
 
                     <p
                       className="text-[15px] md:text-base leading-relaxed max-w-xl"
-                      style={{ color: '#D2C6BE', fontFamily: hf }}
+                      style={{ color: isLight ? '#3d2820' : '#D2C6BE', fontFamily: hf }}
                     >
                       {bizzbot.description}
                     </p>
@@ -550,7 +574,7 @@ export function Products() {
                         />
                         <span
                           className="text-sm md:text-[15px] leading-relaxed"
-                          style={{ color: '#EFE7E0', fontFamily: hf }}
+                          style={{ color: isLight ? '#1f1208' : '#EFE7E0', fontFamily: hf }}
                         >
                           {item}
                         </span>
@@ -566,9 +590,9 @@ export function Products() {
                         key={chip}
                         className="px-3 py-1.5 text-[11px] rounded-full"
                         style={{
-                          background: 'rgba(255,255,255,0.05)',
-                          border: '1px solid rgba(255,255,255,0.08)',
-                          color: '#DDD4CD',
+                          background: isLight ? 'rgba(201,90,40,0.06)' : 'rgba(255,255,255,0.05)',
+                          border: `1px solid ${isLight ? 'rgba(201,90,40,0.18)' : 'rgba(255,255,255,0.08)'}`,
+                          color: isLight ? '#7c2d12' : '#DDD4CD',
                           fontFamily: 'var(--font-mono)',
                         }}
                       >
@@ -599,7 +623,7 @@ export function Products() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-sm transition-colors"
-                      style={{ color: '#D7B39A', fontFamily: 'var(--font-mono)' }}
+                      style={{ color: isLight ? '#9a6f5a' : '#D7B39A', fontFamily: 'var(--font-mono)' }}
                     >
                       <span>{bizzbot.secondary_cta}</span>
                       <ExternalLink className="w-3.5 h-3.5 opacity-70" />
@@ -636,8 +660,8 @@ export function Products() {
                   key={project.title}
                   className="group rounded-2xl p-6 flex flex-col gap-4 relative overflow-hidden"
                   style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: isLight ? 'var(--bg-surface)' : 'rgba(255,255,255,0.03)',
+                    border: `1px solid ${isLight ? 'var(--border-default)' : 'rgba(255,255,255,0.08)'}`,
                     transition: 'border-color 0.3s ease',
                   }}
                   initial={{ opacity: 0, y: 24 }}
@@ -645,31 +669,31 @@ export function Products() {
                   transition={{ duration: 0.6, delay: 0.18 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   whileHover={{ borderColor: `${project.accent}40` }}
                 >
-                  {/* Hover background screenshot */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                    <Image
-                      src={project.image}
-                      alt=""
-                      fill
-                      className="object-contain object-right-bottom"
-                      sizes="400px"
-                      style={{ transform: 'scale(0.7)', transformOrigin: 'right bottom' }}
-                    />
-                    {/* Gradient mask — left fade for text readability */}
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: 'linear-gradient(105deg, rgba(10,10,10,1) 30%, rgba(10,10,10,0.75) 60%, rgba(10,10,10,0.2) 100%)',
-                      }}
-                    />
-                    {/* Gradient mask — top fade */}
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: 'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 25%, transparent 55%)',
-                      }}
-                    />
-                  </div>
+                  {/* Hover background screenshot — only on dark theme (looks better) */}
+                  {!isLight && (
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <Image
+                        src={project.image}
+                        alt=""
+                        fill
+                        className="object-contain object-right-bottom"
+                        sizes="400px"
+                        style={{ transform: 'scale(0.7)', transformOrigin: 'right bottom' }}
+                      />
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: 'linear-gradient(105deg, rgba(10,10,10,1) 30%, rgba(10,10,10,0.75) 60%, rgba(10,10,10,0.2) 100%)',
+                        }}
+                      />
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: 'linear-gradient(to bottom, rgba(10,10,10,1) 0%, rgba(10,10,10,0.6) 25%, transparent 55%)',
+                        }}
+                      />
+                    </div>
+                  )}
 
                   {/* Icon + tag */}
                   <div className="relative z-10 flex items-center gap-3">
@@ -680,8 +704,8 @@ export function Products() {
                       <Icon className="w-4 h-4" style={{ color: project.accent }} />
                     </div>
                     <span
-                      className="text-[10px] tracking-[0.2em] uppercase text-gray-500"
-                      style={{ fontFamily: 'var(--font-mono)' }}
+                      className="text-[10px] tracking-[0.2em] uppercase"
+                      style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}
                     >
                       {project.tag}
                     </span>
@@ -690,14 +714,14 @@ export function Products() {
                   {/* Title + description */}
                   <div className="relative z-10 flex flex-col gap-2">
                     <h3
-                      className="text-lg font-semibold text-white"
-                      style={{ fontFamily: hf }}
+                      className="text-lg font-semibold"
+                      style={{ fontFamily: hf, color: 'var(--text-primary)' }}
                     >
                       {project.title}
                     </h3>
                     <p
-                      className="text-sm text-gray-500 leading-relaxed"
-                      style={{ fontFamily: hf }}
+                      className="text-sm leading-relaxed"
+                      style={{ fontFamily: hf, color: 'var(--text-tertiary)' }}
                     >
                       {project.description}
                     </p>
@@ -709,15 +733,20 @@ export function Products() {
 
         {/* GitHub footnote */}
         <div className="flex items-center justify-center gap-2 mt-6">
-          <span className="text-[11px] text-gray-600" style={{ fontFamily: 'var(--font-mono)' }}>
+          <span
+            className="text-[11px]"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}
+          >
             {t.products.github_note}
           </span>
           <a
             href="https://github.com/byArto"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-[11px] text-gray-500 hover:text-gray-300 transition-colors"
-            style={{ fontFamily: 'var(--font-mono)' }}
+            className="inline-flex items-center gap-1.5 text-[11px] transition-colors"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-tertiary)' }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = 'var(--text-primary)'; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = 'var(--text-tertiary)'; }}
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />

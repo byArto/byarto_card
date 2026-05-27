@@ -1,17 +1,97 @@
 @import "tailwindcss";
 
+/* ============================================================
+   SEMANTIC THEME TOKENS
+   Defined in :root for runtime switching via [data-theme] attr.
+   Dark theme is the default; light overrides apply when
+   <html data-theme="light"> is set.
+   ============================================================ */
+:root,
+:root[data-theme='dark'] {
+  /* Surfaces */
+  --bg-base: #0A0A0A;
+  --bg-surface: rgba(255, 255, 255, 0.03);
+  --bg-elevated: rgba(255, 255, 255, 0.06);
+  --bg-overlay: rgba(20, 20, 20, 0.6);
+
+  /* Text */
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d4;
+  --text-tertiary: #9ca3af;
+  --text-muted: #6b7280;
+  --text-faint: #4b5563;
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+
+  /* Accents */
+  --accent: #00E5FF;
+  --accent-hot: #00E5FF;
+  --accent-soft: rgba(0, 229, 255, 0.08);
+  --accent-border: rgba(0, 229, 255, 0.18);
+  --accent-strong: rgba(0, 229, 255, 0.28);
+  --accent-glow: rgba(0, 229, 255, 0.15);
+
+  /* Scrollbar */
+  --scrollbar-track: #0a0a0a;
+  --scrollbar-thumb: #333;
+  --scrollbar-thumb-hover: #555;
+
+  /* Selection */
+  --selection-bg: rgba(0, 229, 255, 0.3);
+  --selection-fg: #fff;
+}
+
+:root[data-theme='light'] {
+  /* Surfaces — Claude vellum aesthetic */
+  --bg-base: #faf9f5;          /* vellum-white */
+  --bg-surface: #ffffff;       /* snow-white */
+  --bg-elevated: #ffffff;
+  --bg-overlay: rgba(250, 249, 245, 0.7);
+
+  /* Text */
+  --text-primary: #141413;     /* ink-black */
+  --text-secondary: #3d3d3a;   /* graphite */
+  --text-tertiary: #73726c;    /* dusty-gray */
+  --text-muted: #9c9a92;       /* stone */
+  --text-faint: #b8b6ad;
+
+  /* Borders — parchment system */
+  --border-subtle: rgba(31, 30, 29, 0.06);
+  --border-default: #dedcd1;   /* parchment */
+  --border-strong: rgba(31, 30, 29, 0.18);
+
+  /* Accents — preserve cyan identity but darker + terra-cotta for hot CTAs */
+  --accent: #0891b2;           /* deep cyan, readable on cream */
+  --accent-hot: #d97757;       /* terra-cotta — Claude signature */
+  --accent-soft: rgba(8, 145, 178, 0.06);
+  --accent-border: rgba(8, 145, 178, 0.22);
+  --accent-strong: rgba(8, 145, 178, 0.32);
+  --accent-glow: rgba(8, 145, 178, 0.12);
+
+  /* Scrollbar */
+  --scrollbar-track: #faf9f5;
+  --scrollbar-thumb: #c5c3b8;
+  --scrollbar-thumb-hover: #9c9a92;
+
+  /* Selection */
+  --selection-bg: rgba(217, 119, 87, 0.25);
+  --selection-fg: #141413;
+}
+
 @theme inline {
-  --color-background: #0A0A0A;
-  --color-foreground: #F0F0F0;
-  --color-accent: #00E5FF;
-  --color-accent-glow: rgba(0, 229, 255, 0.15);
-  --color-accent-border: rgba(0, 229, 255, 0.25);
-  --color-surface: #141414;
-  --color-surface-hover: #1A1A1A;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-hover: rgba(255, 255, 255, 0.15);
-  --color-muted: #6B7280;
-  --color-muted2: #9CA3AF;
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
+  --color-accent: var(--accent);
+  --color-accent-glow: var(--accent-glow);
+  --color-accent-border: var(--accent-border);
+  --color-surface: var(--bg-surface);
+  --color-border: var(--border-default);
+  --color-border-hover: var(--border-strong);
+  --color-muted: var(--text-muted);
+  --color-muted2: var(--text-tertiary);
   --font-heading: 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-body: 'Inter', sans-serif;
@@ -27,18 +107,20 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg-base);
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+  background: var(--bg-base);
+  color: var(--text-primary);
   font-family: var(--font-body);
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 ::selection {
-  background: rgba(0, 229, 255, 0.3);
-  color: #fff;
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 ::-webkit-scrollbar {
@@ -46,16 +128,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0A;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--scrollbar-thumb-hover);
 }
 
 /* Glass card utility */
@@ -71,7 +153,7 @@ body {
   background: rgba(20, 20, 20, 0.8);
 }
 
-/* Glow button */
+/* Glow button — cyan→teal on dark, terra-cotta gradient on light */
 .btn-glow {
   position: relative;
   background: linear-gradient(135deg, #00E5FF, #2DD4BF);
@@ -103,7 +185,21 @@ body {
   box-shadow: 0 8px 30px rgba(0, 229, 255, 0.3);
 }
 
-/* Glass button */
+:root[data-theme='light'] .btn-glow {
+  background: linear-gradient(135deg, #d97757, #e08a6a);
+  color: #ffffff;
+}
+
+:root[data-theme='light'] .btn-glow::before {
+  background: linear-gradient(135deg, #d97757, #e08a6a);
+  opacity: 0.25;
+}
+
+:root[data-theme='light'] .btn-glow:hover {
+  box-shadow: 0 8px 30px rgba(217, 119, 87, 0.35);
+}
+
+/* Glass button — translucent on dark, outlined ink on light */
 .btn-glass {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -116,6 +212,18 @@ body {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
+}
+
+:root[data-theme='light'] .btn-glass {
+  background: transparent;
+  border: 1px solid rgba(31, 30, 29, 0.3);
+  color: #141413;
+  backdrop-filter: none;
+}
+
+:root[data-theme='light'] .btn-glass:hover {
+  background: rgba(31, 30, 29, 0.04);
+  border-color: rgba(31, 30, 29, 0.5);
 }
 
 /* Marquee animation */

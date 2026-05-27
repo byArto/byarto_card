@@ -20,16 +20,16 @@ function PlatformCard({ href, icon, color, count, label, caption }: PlatformCard
     <div
       className="rounded-xl p-4 md:p-5 flex flex-col gap-4 h-full transition-all duration-300"
       style={{
-        background: 'rgba(255,255,255,0.025)',
-        border: '1px solid rgba(255,255,255,0.06)',
+        background: 'var(--bg-surface)',
+        border: '1px solid var(--border-default)',
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLElement).style.borderColor = `${color}55`;
         (e.currentTarget as HTMLElement).style.background = `${color}08`;
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)';
-        (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.025)';
+        (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-default)';
+        (e.currentTarget as HTMLElement).style.background = 'var(--bg-surface)';
       }}
     >
       <div className="flex items-center justify-between">
@@ -41,13 +41,13 @@ function PlatformCard({ href, icon, color, count, label, caption }: PlatformCard
             {icon}
           </div>
           <span
-            className="text-[10px] tracking-[0.22em] uppercase text-gray-500"
-            style={{ fontFamily: 'var(--font-mono)' }}
+            className="text-[10px] tracking-[0.22em] uppercase"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}
           >
             {label}
           </span>
         </div>
-        {href && <ExternalLink className="w-3.5 h-3.5 text-gray-700" />}
+        {href && <ExternalLink className="w-3.5 h-3.5" style={{ color: 'var(--text-faint)' }} />}
       </div>
       <div className="flex flex-col gap-1">
         <span
@@ -56,7 +56,9 @@ function PlatformCard({ href, icon, color, count, label, caption }: PlatformCard
         >
           {count}
         </span>
-        <p className="text-xs text-gray-500 leading-relaxed">{caption}</p>
+        <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+          {caption}
+        </p>
       </div>
     </div>
   );
@@ -75,6 +77,7 @@ export function BeyondCode() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
   const { lang, hf } = useLang();
+  // theme is read in PlatformCard children via CSS variables — no direct branching here
 
   const YT_ICON = (
     <svg className="w-4 h-4 text-[#ff4444]" viewBox="0 0 24 24" fill="currentColor">
@@ -108,12 +111,15 @@ export function BeyondCode() {
           transition={{ duration: 0.5 }}
         >
           <span
-            className="text-xs tracking-[0.3em] uppercase text-[#00E5FF] shrink-0"
-            style={{ fontFamily: 'var(--font-mono)' }}
+            className="text-xs tracking-[0.3em] uppercase shrink-0"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)' }}
           >
             {lang === 'ru' ? '// Бэкграунд' : '// Beyond Code'}
           </span>
-          <div className="flex-1 h-px bg-gradient-to-r from-[rgba(0,229,255,0.25)] to-transparent" />
+          <div
+            className="flex-1 h-px"
+            style={{ background: 'linear-gradient(to right, var(--accent-strong), transparent)' }}
+          />
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-10 lg:gap-14 items-center">
@@ -127,33 +133,35 @@ export function BeyondCode() {
             {lang === 'ru' ? (
               <>
                 <h2
-                  className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold leading-[1.1] text-white"
-                  style={{ fontFamily: hf }}
+                  className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold leading-[1.1]"
+                  style={{ fontFamily: hf, color: 'var(--text-primary)' }}
                 >
-                  <span className="text-[#00E5FF]">5 лет</span> строю медиа.<br />
+                  <span style={{ color: 'var(--accent)' }}>5 лет</span> строю медиа.<br />
                   Теперь строю и продукты.
                 </h2>
                 <p
-                  className="text-base text-gray-400 leading-relaxed max-w-md"
-                  style={{ fontFamily: hf }}
+                  className="text-base leading-relaxed max-w-md"
+                  style={{ fontFamily: hf, color: 'var(--text-tertiary)' }}
                 >
-                  Параллельно с разработкой веду каналы в Web3 на 30K+ человек. Поэтому понимаю не только код, но и аудиторию, продуктовую боль и монетизацию. Web3-бэкграунд работает <span className="text-gray-200 font-medium">на разработку</span>, а не вместо неё.
+                  Параллельно с разработкой веду каналы в Web3 на 30K+ человек. Поэтому понимаю не только код, но и аудиторию, продуктовую боль и монетизацию. Web3-бэкграунд работает{' '}
+                  <span className="font-medium" style={{ color: 'var(--text-primary)' }}>на разработку</span>, а не вместо неё.
                 </p>
               </>
             ) : (
               <>
                 <h2
-                  className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold leading-[1.1] text-white"
-                  style={{ fontFamily: hf }}
+                  className="text-2xl md:text-3xl lg:text-[2.25rem] font-bold leading-[1.1]"
+                  style={{ fontFamily: hf, color: 'var(--text-primary)' }}
                 >
-                  <span className="text-[#00E5FF]">5 years</span> building media.<br />
+                  <span style={{ color: 'var(--accent)' }}>5 years</span> building media.<br />
                   Now building products too.
                 </h2>
                 <p
-                  className="text-base text-gray-400 leading-relaxed max-w-md"
-                  style={{ fontFamily: hf }}
+                  className="text-base leading-relaxed max-w-md"
+                  style={{ fontFamily: hf, color: 'var(--text-tertiary)' }}
                 >
-                  In parallel with development, I run Web3 channels for 30K+ people. That&apos;s why I understand not just code, but audience, product pain and monetization. Web3 background works <span className="text-gray-200 font-medium">for development</span>, not instead of it.
+                  In parallel with development, I run Web3 channels for 30K+ people. That&apos;s why I understand not just code, but audience, product pain and monetization. Web3 background works{' '}
+                  <span className="font-medium" style={{ color: 'var(--text-primary)' }}>for development</span>, not instead of it.
                 </p>
               </>
             )}

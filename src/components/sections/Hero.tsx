@@ -4,11 +4,14 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send } from 'lucide-react';
 import { useRef } from 'react';
 import { useLang } from '@/contexts/LangContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import AITerminal from '@/components/ui/AITerminal';
 import LaptopMockup from '@/components/ui/LaptopMockup';
 
 export function Hero() {
   const { t, hf } = useLang();
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -26,21 +29,36 @@ export function Hero() {
       ref={sectionRef}
       className="relative min-h-screen flex items-center overflow-hidden"
     >
-      {/* Background */}
+      {/* Background — dark photo + cyan glow on dark, warm vellum + terra-cotta glow on light */}
       <motion.div
         className="absolute inset-0 z-0"
         style={{ scale: bgScale, willChange: 'transform', transformStyle: 'preserve-3d' }}
       >
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(/hero-bg.png)' }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]/60" />
-        <div
-          className="absolute inset-0"
-          style={{ background: 'radial-gradient(ellipse at 30% 80%, rgba(0,229,255,0.06) 0%, transparent 50%)' }}
-        />
+        {isLight ? (
+          <>
+            <div className="absolute inset-0" style={{ background: 'var(--bg-base)' }} />
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  'radial-gradient(ellipse 70% 60% at 30% 70%, rgba(217,119,87,0.10) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 30%, rgba(8,145,178,0.06) 0%, transparent 65%)',
+              }}
+            />
+          </>
+        ) : (
+          <>
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: 'url(/hero-bg.png)' }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/80 to-[#0A0A0A]/40" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/60 via-transparent to-[#0A0A0A]/60" />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'radial-gradient(ellipse at 30% 80%, rgba(0,229,255,0.06) 0%, transparent 50%)' }}
+            />
+          </>
+        )}
       </motion.div>
 
       {/* Content */}
@@ -59,8 +77,17 @@ export function Hero() {
         >
           {/* Badge */}
           <div className="flex items-center gap-3 mb-6">
-            <span className="w-2 h-2 rounded-full bg-[#00E5FF] shadow-[0_0_8px_#00E5FF] animate-pulse" />
-            <span className="text-xs tracking-[0.25em] uppercase text-[#00E5FF]" style={{ fontFamily: 'var(--font-mono)' }}>
+            <span
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{
+                background: 'var(--accent)',
+                boxShadow: '0 0 8px var(--accent)',
+              }}
+            />
+            <span
+              className="text-xs tracking-[0.25em] uppercase"
+              style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent)' }}
+            >
               {t.hero.badge}
             </span>
           </div>
@@ -69,17 +96,17 @@ export function Hero() {
           {/* H1 */}
           <h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-[58px] xl:text-[64px] font-bold leading-[1.02] tracking-tight mb-8"
-            style={{ fontFamily: hf }}
+            style={{ fontFamily: hf, color: 'var(--text-primary)' }}
           >
             {t.hero.h1_line1}
             <br />
-            <span className="text-[#00E5FF]">{t.hero.h1_accent1}</span>
+            <span style={{ color: 'var(--accent)' }}>{t.hero.h1_accent1}</span>
           </h1>
 
           {/* Subtitle */}
           <p
-            className="text-base md:text-lg text-gray-400 max-w-xl leading-relaxed mb-10"
-            style={{ fontFamily: 'var(--font-body)' }}
+            className="text-base md:text-lg max-w-xl leading-relaxed mb-10"
+            style={{ fontFamily: 'var(--font-body)', color: 'var(--text-tertiary)' }}
           >
             {t.hero.subtitle}
           </p>
@@ -129,16 +156,20 @@ export function Hero() {
           transition={{ delay: 1.5 }}
         >
           <span
-            className="text-[10px] tracking-widest uppercase text-gray-500 rotate-90 origin-center mb-8"
-            style={{ fontFamily: 'var(--font-mono)' }}
+            className="text-[10px] tracking-widest uppercase rotate-90 origin-center mb-8"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}
           >
             Scroll
           </span>
           <motion.div
-            className="w-[1px] h-12 bg-gradient-to-b from-[#00E5FF]/60 to-transparent"
+            className="w-[1px] h-12"
             animate={{ scaleY: [0, 1, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ transformOrigin: 'top' }}
+            style={{
+              background: 'linear-gradient(to bottom, var(--accent) 0%, transparent 100%)',
+              opacity: 0.6,
+              transformOrigin: 'top',
+            }}
           />
         </motion.div>
       </motion.div>

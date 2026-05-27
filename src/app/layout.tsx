@@ -38,13 +38,30 @@ export const metadata: Metadata = {
   },
 };
 
+// Sets data-theme on <html> before paint to avoid FOUC.
+// Reads byarto-theme from localStorage, falls back to dark.
+const themeBootScript = `
+(function () {
+  try {
+    var t = localStorage.getItem('byarto-theme');
+    if (t !== 'light' && t !== 'dark') t = 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
       <body
         className={`${spaceGrotesk.variable} ${unbounded.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased`}
       >
